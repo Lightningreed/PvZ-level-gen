@@ -4,6 +4,7 @@ Planned:
 3. A level parser (well HTML's security... this should be for Internet Explorer only.)
 4. Logger
 5. Responsive style
+6. (IMPORTANT) Highlight essential parts of JSON
 
 Changelog:
 v0.1 -> 0.5: Bug fixes (also more bugs to fix)
