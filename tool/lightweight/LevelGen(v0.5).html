@@ -23,7 +23,8 @@
         <option>SunProduced</option>
         <option>SimutaneousPlants</option>
         <option>PlantsLost</option>
-        <option>MoldColonies</option> <!--wtf this one-->
+        <option>MoldColonies</option>
+        <!--wtf this one-->
     </select>
     <button type="button" onclick="onAliasSelect();">Select!</button>
     <form>
@@ -222,12 +223,12 @@
                     { "name": "ZombieType", "id": "lootOverrideZType", "displayTxt": "Choose a zombie to override loot drop (internal): ", "type": "text" },
                     { "name": "LootOverride", "id": "lootToOverride", "displayTxt": "Override with which type of loot? ", "type": "text" }
                 ]
-            };runCreateObj.toSubmit = true;
+            }; runCreateObj.toSubmit = true;
             createUI();
             var lootOverrideArray = [], lootOverrideAlias = ["LootOverride"], lootOverrideObj = {}, lootOverrideObjdata = {}, validZType;
             completeObjdata = function () {
                 runCreateObj.run = true;
-                
+
                 validZType = "RTID(" + userInput.ZombieType + "@ZombieTypes)";
                 var realOverride = {};
                 realOverride[myGrid.data[0].name] = validZType;
@@ -250,7 +251,7 @@
                 "data": [
                     { "name": "PlankRows", "id": "PSPlank", "displayTxt": "Which row do you want to place plank on? (only work for Pirate Seas) ", "type": "number", "min": "0", "max": "4" }
                 ]
-            };runCreateObj.toSubmit = true;
+            }; runCreateObj.toSubmit = true;
             createUI();
             var plankRows = [], plankObj = {}, plankObjdata = {}, plankAlias = ["PiratePlanks"];
             completeObjdata = function () {
@@ -377,9 +378,11 @@
             clearInputArea();
             addText('How many items do you want to leave at start? ');
             myGroupBox.appendChild(createInput('number', 'itemPrePlaceNumber', 'potionClass', ''));
+            newLine();
             addText('Maximum amount of items on the lawn?  ');
             myGroupBox.appendChild(createInput('number', 'itemMaxNumber', 'potionClass', ''));
             // handle 2 first obj
+            newLine();
             var clickHandler = function () {
                 iPCount = readIntInput('itemPrePlaceNumber');
                 maxPCount = readIntInput('itemMaxNumber');
@@ -388,7 +391,7 @@
             myGroupBox.appendChild(createButton('Confirm', clickHandler, 'toBeDisabled'));
             newLine(); newLine();
             //create potion timer
-            addText('Configure potions:');
+            addText('Configure potions:');newLine();
             addText('Maximum time to spawn item:  '); myGroupBox.appendChild(createInput('number', 'itemMaxSpawnTime', 'potionClass', '')); addText(" ");
             addText('Minimum time to spawn item: '); myGroupBox.appendChild(createInput('number', 'itemMinSpawnTime', 'potionClass', '')); addText(" ");
             //handle time
@@ -497,7 +500,7 @@
         function handleSunProduced() {
             myGrid = {
                 "data": [
-                    {"name":"TargetSun", "id":"targetSun", "displayTxt":"Target sun to produce: ","type":"number", "min": "0", "max":""}
+                    { "name": "TargetSun", "id": "targetSun", "displayTxt": "Target sun to produce: ", "type": "number", "min": "0", "max": "" }
                 ]
             }
             createUI();
@@ -514,7 +517,7 @@
         function handleMaxPlants() {
             myGrid = {
                 "data": [
-                    {"name": "MaximumPlants","id":"maxPlantId",'displayTxt':'Maximum amount of plants allowed onscreen? ', 'type':'number', 'min':'0', 'max':''}
+                    { "name": "MaximumPlants", "id": "maxPlantId", 'displayTxt': 'Maximum amount of plants allowed onscreen? ', 'type': 'number', 'min': '0', 'max': '' }
                 ]
             }
             createUI();
@@ -523,8 +526,59 @@
                 runCreateObj.run = false;
                 maxPlantsObj.aliases = maxPlantsAlias;
                 maxPlantsObj.objclass = "StarChallengeSimultaneousPlantsProps";
-                max
+                maxPlantsObj.objdata = userInput;
             }
+        }
+
+        function handleMaxPlantsLost() {
+            myGrid = {
+                "data": [
+                    { 'name': 'MaximumPlantsLost', 'id': 'maxPlantLostID', 'displayTxt': 'Maximum amount of plants to lose? ', 'type': 'number', 'min': '0', 'max': '' }
+                ]
+            }
+            createUI();
+            var maxPlantLossAlias = ['PlantsLost'], maxPLossObj = {};
+            completeObjdata = function () {
+                runCreateObj.run = false;
+                maxPLossObj.aliases = maxPlantLossAlias;
+                maxPLossObj.objclass = "StarChallengePlantsLostProps";
+                maxPLossObj.objdata = userInput;
+            }
+        }
+
+        function handleMold() {
+            var moldTakeObj =
+            {
+                "aliases": [
+                    "MoldColonies"
+                ],
+                "objclass": "MoldColonyChallengeProps",
+                "objdata": {
+                    "Locations": "RTID(Mold@CurrentLevel)"
+                }
+            } //create this so well JSON doesn't mess uo
+            clearInputArea();
+            var moldConfig = {
+                'data': [
+                {'display':'Row 1 '}, {'display':'Row 2 '}, {'display': 'Row 3 '}, {'display': 'Row 4 ', 'display': 'Row 5 '}
+                ]
+            }
+            moldConfig.data.forEach(function createMoldUI(param) {
+                var x = document.createTextNode(param.display);
+                myGroupBox.appendChild(x);
+                var i = 0;
+                while (i < 10) {
+                    var btn = document.createElement('input');
+                    btn.type = 'number';
+                    btn.min = '0';
+                    btn.max = '1';
+                    btn.maxLength = '1';
+                    btn.value = '0';
+                    myGroupBox.appendChild(btn);
+                    i++;
+                }
+                myGroupBox.appendChild(document.createElement('br'));
+            })
         }
 
         function myReadData() {
@@ -588,14 +642,15 @@
                 completeObjdata();
                 myGrid.data.forEach(function insertObject(aliasesObject) {
                     document.getElementById(aliasesObject.id).value = "";
-                })}
-                if (runCreateObj.toSubmit === true) {
-                myGroupBox.appendChild(createButton('Submit', clickHandler)); 
-                }
+                })
+            }
+            if (runCreateObj.toSubmit === true) {
+                myGroupBox.appendChild(createButton('Submit', clickHandler));
+            }
 
 
             clickHandler = function () {
-                 userInput = myReadData();
+                userInput = myReadData();
                 completeObjdata();
                 if (runCreateObj.run == true) {
                     completeObjdata.createObj();
