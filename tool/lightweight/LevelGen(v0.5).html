@@ -391,7 +391,7 @@
             myGroupBox.appendChild(createButton('Confirm', clickHandler, 'toBeDisabled'));
             newLine(); newLine();
             //create potion timer
-            addText('Configure potions:');newLine();
+            addText('Configure potions:'); newLine();
             addText('Maximum time to spawn item:  '); myGroupBox.appendChild(createInput('number', 'itemMaxSpawnTime', 'potionClass', '')); addText(" ");
             addText('Minimum time to spawn item: '); myGroupBox.appendChild(createInput('number', 'itemMinSpawnTime', 'potionClass', '')); addText(" ");
             //handle time
@@ -560,9 +560,10 @@
             clearInputArea();
             var moldConfig = {
                 'data': [
-                {'display':'Row 1 '}, {'display':'Row 2 '}, {'display': 'Row 3 '}, {'display': 'Row 4 ', 'display': 'Row 5 '}
+                    { 'display': 'Row 1 ' }, { 'display': 'Row 2 ' }, { 'display': 'Row 3 ' }, { 'display': 'Row 4 ' }, { 'display': 'Row 5 ' }
                 ]
             }
+            var c = 0;
             moldConfig.data.forEach(function createMoldUI(param) {
                 var x = document.createTextNode(param.display);
                 myGroupBox.appendChild(x);
@@ -572,15 +573,37 @@
                     btn.type = 'number';
                     btn.min = '0';
                     btn.max = '1';
-                    btn.maxLength = '1';
+                    btn.maxLength = 1;
                     btn.value = '0';
+                    btn.className = "moldCollect" + c;
                     myGroupBox.appendChild(btn);
+                    addText(" ");
                     i++;
                 }
                 myGroupBox.appendChild(document.createElement('br'));
-            })
+                c++;
+            }
+            )
+            var clickHandler = function() {
+                moldReadData();
+            }
+            myGroupBox.appendChild(createButton("Generate object", clickHandler));
         }
 
+        function moldReadData() {
+            var c = 0, arr = []; values = [];
+            while (c < 5) {
+                var moldCls = document.getElementsByClassName("moldCollect" + c);
+                Array.from(moldCls); //throwing error
+                moldCls.forEach(function (colNum){
+                    arr.push(parseInt(colNum));
+                })
+                values.push(arr);
+                arr = [];
+                c++;
+            }
+            console.log(values);
+        }
         function myReadData() {
             var a = {};
             myGrid.data.forEach(function insertObject(aliasesObject) {
