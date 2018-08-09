@@ -594,8 +594,8 @@
             var c = 0, arr = []; values = [];
             while (c < 5) {
                 var moldCls = document.getElementsByClassName("moldCollect" + c);
-                Array.from(moldCls); //throwing error
-                moldCls.forEach(function (colNum){
+                var newMoldCls =  Array.from(moldCls); //throwing error
+                newMoldCls.forEach(function (colNum){
                     arr.push(parseInt(colNum));
                 })
                 values.push(arr);
