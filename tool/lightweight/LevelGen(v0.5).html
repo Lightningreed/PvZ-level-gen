@@ -24,7 +24,6 @@
         <option>SimutaneousPlants</option>
         <option>PlantsLost</option>
         <option>MoldColonies</option>
-        <!--wtf this one-->
     </select>
     <button type="button" onclick="onAliasSelect();">Select!</button>
     <form>
@@ -47,6 +46,7 @@
         var iPCount;
         var maxPCount;
         var spawnTimer = {};
+		var moldConfig= [];
 
         //functions
         var completeObjdata;
@@ -561,7 +561,7 @@
                 }
             } //create this so well JSON doesn't mess uo
             clearInputArea();
-            var moldConfig = {
+            moldConfig = {
                 'data': [
                     { 'display': 'Row 1 ' }, { 'display': 'Row 2 ' }, { 'display': 'Row 3 ' }, { 'display': 'Row 4 ' }, { 'display': 'Row 5 ' }
                 ]
@@ -578,7 +578,7 @@
                     btn.max = '1';
                     btn.maxLength = 1;
                     btn.value = '0';
-                    btn.className = "moldCollect" + c;
+                    btn.id = "moldCollect_" + c+"_"+i;
                     myGroupBox.appendChild(btn);
                     addText(" ");
                     i++;
@@ -594,19 +594,17 @@
         }
 
         function moldReadData() {
-            var c = 0, arr = []; values = [];
-            while (c < 5) {
-                var moldCls = document.getElementsByClassName("moldCollect" + c);
-                var newMoldCls =  Array.from(moldCls); //throwing error
-                newMoldCls.forEach(function (colNum){
-                    var x = this.value
-                    arr.push(parseInt(x));
-                })
-                values.push(arr);
-                arr = [];
-                c++;
-            }
-            console.log(values);
+            var c = 0; var r=0; var moldInptData = []; rows = [];
+			
+			for(c=0; c < moldConfig.data.length; c++) {
+			     moldInptData[c] = [];
+			    for (r=0; r<9; r++) {
+				   var moldCls = document.getElementById("moldCollect_" + c + "_" + r).value;
+				   moldInptData[c].push(parseInt(moldCls))
+				}
+			}
+			
+            console.log(moldInptData);
         }
         function myReadData() {
             var a = {};
