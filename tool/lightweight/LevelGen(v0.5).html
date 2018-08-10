@@ -566,12 +566,12 @@
                     { 'display': 'Row 1 ' }, { 'display': 'Row 2 ' }, { 'display': 'Row 3 ' }, { 'display': 'Row 4 ' }, { 'display': 'Row 5 ' }
                 ]
             }
-            var c = 0;
+                       var c = 0;
             moldConfig.data.forEach(function createMoldUI(param) {
                 var x = document.createTextNode(param.display);
                 myGroupBox.appendChild(x);
                 var i = 0;
-                while (i < 10) {
+                while (i < 9) {
                     var btn = document.createElement('input');
                     btn.type = 'number';
                     btn.min = '0';
@@ -599,7 +599,8 @@
                 var moldCls = document.getElementsByClassName("moldCollect" + c);
                 var newMoldCls =  Array.from(moldCls); //throwing error
                 newMoldCls.forEach(function (colNum){
-                    arr.push(parseInt(colNum));
+                    var x = this.value
+                    arr.push(parseInt(x));
                 })
                 values.push(arr);
                 arr = [];
