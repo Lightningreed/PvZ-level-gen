@@ -621,7 +621,7 @@
         }
 
         function handleSeedBank() {
-            var seedBankOption = {}, presetList = [], presetListObj = {};
+            var seedBankOption = {}, presetList = [], presetListObj = {}, blacklistArr = [], whitelistArr = [], suggestList = [];
             clearInputArea();
             addText('Preset list: ');
             myGroupBox.appendChild(createInput('text', 'pNames'));addText('   at level  ');myGroupBox.appendChild(createInput('number', 'pLvl'));
@@ -632,8 +632,34 @@
                 //empty pls
             }; addText('  ')
             myGroupBox.appendChild(createButton('Add', clickHandler));
-            
             newLine();newLine();
+            addText('Plant blacklist: ');
+            myGroupBox.appendChild(createInput('text', 'blackListedP'));
+            clickHandler = function () {
+                blacklistArr.push(readTxtInput('blacklistedP'));
+            };
+            addText('  ');myGroupBox.appendChild(createButton('Add', clickHandler));
+            newLine();newLine();
+            addText('Plant whilelist: ')
+            myGroupBox.appendChild(createInput('text', 'whitelistedP'));
+            clickHandler = function () {
+                whitelistArr.push(readTxtInput('whitelistedP'));
+            }
+            addText('  ');myGroupBox.appendChild(createButton('Add', clickHandler));
+            newLine(); newLine();
+            addText('Suggest plant list: ');
+            myGroupBox.appendChild(createInput('text', 'listSuggest'));
+            clickHandler = function () {
+                var a = readTxtInput('listSuggest');
+                if (a.includes(',')) {
+                    var b = a.spilt(',')
+                    suggestList.push(b);
+                }
+                else {
+                    suggestList(readTxtInput('listSuggest'));
+                }
+            }
+            //too lazy to create the obj now to later
         }
         //waves loudly ---- this is the wave gen reeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee...
 
