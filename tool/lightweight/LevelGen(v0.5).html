@@ -567,6 +567,13 @@
                 ]
             }
                        var c = 0;
+					   
+		    var myValidator = function(e) {
+			  if(e) {
+			     var inptBox = e.target;
+			     if (inptBox.value.length > inptBox.maxLength) inptBox.value = inptBox.value.slice(0, inptBox.maxLength);
+			  }
+			};
             moldConfig.data.forEach(function createMoldUI(param) {
                 var x = document.createTextNode(param.display);
                 myGroupBox.appendChild(x);
@@ -574,12 +581,14 @@
                 while (i < 9) {
                     var btn = document.createElement('input');
                     btn.type = 'number';
-                    btn.min = '0';
-                    btn.max = '1';
+                    btn.min = 0;
+                    btn.max = 1;
                     btn.maxLength = 1;
                     btn.value = '0';
                     btn.id = "moldCollect_" + c+"_"+i;
                     myGroupBox.appendChild(btn);
+					btn.addEventListener('oninput', myValidator, true);
+					btn.addEventListener('input', myValidator, true);
                     addText(" ");
                     i++;
                 }
