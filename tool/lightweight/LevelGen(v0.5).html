@@ -24,6 +24,7 @@
         <option>SimutaneousPlants</option>
         <option>PlantsLost</option>
         <option>MoldColonies</option>
+        <option>WaveCreator</option>
     </select>
     <button type="button" onclick="onAliasSelect();">Select!</button>
     <form>
@@ -46,6 +47,7 @@
         var iPCount;
         var maxPCount;
         var spawnTimer = {};
+
 		var moldConfig= [];
 
         //functions
@@ -109,6 +111,8 @@
                 case 14:
                     handleMold(); //WHY THE FUCK AM I HERE ALREADY
                     break;
+                    case 15:
+                    handleWave();
                 default:
                 //hacker detected!!
             };
@@ -366,13 +370,6 @@
             }
         }
 
-        function readRailsData() {
-            var a = {};
-            a['RailCartType'] = readTxtInput("railCartTypeID");
-            a['Rails'] = rails;
-            a['RailCarts'] = railCarts;
-            return a;
-        }
 
         function addPotionUI() {
             clearInputArea();
@@ -409,13 +406,20 @@
             };
             myGroupBox.appendChild(createButton('Add', clickHandler));
             clickHandler = function () {
-                userInput = readItemsData();
+                userInput = function() {
+                    itemsObj.InitialPotionCount = iPCount;
+                    itemsObj.MaxPotionCount = maxPCount;
+                    itemsObj.PotionSpawnTimer = spawnTimer;
+                    itemsObj.PotionTypes = spawnObj; 
+                };
                 completeObjdata();
                 completeObjdata.createObj();
                 clickHandler.onclick = function () { document.getElementById('toBeDisabled3').disabled = true; }
             };
             myGroupBox.appendChild(createButton('Generate chosen object', clickHandler, 'toBeDisabled3'));
         }
+
+
         function handleIntPlants() {
             myGrid = {
                 "data": [
@@ -615,6 +619,19 @@
 			
             console.log(moldInptData);
         }
+
+        function handleSeedBank() {
+            clearInputArea();
+            addText('Preset list: ');
+            myGroupBox.appendChild(createInput('text'));addText('   at level  ');myGroupBox.appendChild(createInput('number'));
+            var clickHandler = function() {
+
+            }
+
+            newLine();newLine();
+        }
+        //waves loudly ---- this is the wave gen reeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee...
+
         function myReadData() {
             var a = {};
             myGrid.data.forEach(function insertObject(aliasesObject) {
