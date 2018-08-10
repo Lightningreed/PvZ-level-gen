@@ -1,0 +1,382 @@
+{
+    "#comment": "free-form",
+    "objects": [
+        {
+            "objclass": "LevelDefinition",
+            "objdata": {
+                "Description": "free-form",
+				"FirstRewardParam": "",
+                "FirstRewardType": "",
+                "FirstIntroNarrative": "",
+                "ReplayIntroNarrative": "",
+				"StartingSun": 50,
+                "LevelNumber": 13,
+				"DisableRestart": true,
+				"DisableSaveGame": false,
+				"IsLevelOfTheDay": false,
+				"IsDangerRoom": false,
+				"ShowZombieThreatAlerts": true,
+				"SuppressAccountUpgrades": true,
+                "SuppressPlantfoodPurchase": true,
+                "FixedPlantLevel": 1,
+                "ZombieLevel": 1,
+                "DisablePlantBoosts": true
+				"LevelPowerupSet": "LevelPowerupsDisabled",
+				"ResourceGroupNames": [
+					"DelayLoad_Background_Beach",
+					"DelayLoad_Background_Beach_Compressed"
+				],
+                "Modules": [
+                    "RTID(StandardIntro@LevelModules)",
+                    "RTID(ZombiesDeadWinCon@LevelModules)",
+					"RTID(DefaultZombieWinCondition@LevelModules)",
+					"RTID(SeedBank@CurrentLevel)",
+                    "RTID(Escalation@CurrentLevel)",
+					"RTID(InitialPlants@CurrentLevel)",
+					"RTID(InitialZombies@CurrentLevel)",
+					"RTID(InitialGriditem@CurrentLevel)",
+					"RTID(ChallengeModule@CurrentLevel)",
+					"RTID(ProtectThePlant@CurrentLevel)",
+					"RTID(NewWaves@CurrentLevel)"
+                ],
+                "Name": "free-form",
+                "StageModule": "RTID(DarkStage@LevelModules)"
+            }
+        },
+		{
+            "objclass": "PlantCooldownModifierProperties",
+            "aliases": [
+                "CooldownMod"
+            ],
+            "objdata": {
+                "CooldownMultiplier": 0.5,
+                "HomeworldToExcludeFromOverride": "dark"
+            }
+        },
+		{
+            "objclass": "SunBombChallengeProperties",
+            "aliases": [
+                "SunBombs"
+            ],
+            "objdata": {
+                "PlantBombExplosionRadius": 25,
+                "ZombieBombExplosionRadius": 80,
+                "PlantDamage": 1000.0,
+                "ZombieDamage": 500.0
+            }
+        },
+		{
+            "objclass": "ZombieModifierProperties",
+            "aliases": [
+                "SpeedyZombies"
+            ],
+            "objdata": {
+                "Speedy": true
+            }
+        },
+		{
+            "objclass": "LootOverrideModuleProperties",
+            "aliases": [
+                "LootOverride"
+            ],
+            "objdata": {
+                "Overrides": [
+                    {
+                        "ZombieType": "RTID(tutorial@ZombieTypes)",
+                        "LootOverride": "GoldCoin"				\\ GoldCoin, SilverCoin, SmallSun, LargeSun, Gem, Sprout, LawnMower (?), 
+                    }
+                ]
+            }
+        },
+		{
+            "aliases": [
+                "PiratePlanks"
+            ],
+            "objclass": "PiratePlankProperties",				\\ Only in Pirate
+            "objdata": {
+                "PlankRows": [
+                    0,1,2,3
+                ]
+            }
+        },
+		{
+            "aliases": [
+                "CowboyRails"
+            ],
+            "objclass": "RailcartProperties",
+            "objdata": {
+                "RailcartType": "railcart_cowboy",				\\ railcart_cowboy, railcart_tutorial
+                "Railcarts": [									\\ Starts with 0
+                    {
+                        "Column": 3,							
+                        "Row": 2
+                    }
+                ],
+                "Rails": [										\\ Start with 0
+                    {
+                        "Column": 3,
+                        "RowEnd": 3,
+                        "RowStart": 1
+                    }
+                ]
+            }
+        },
+		{
+            "aliases": [
+                "Tide"
+            ],
+            "objclass": "TideProperties",						\\ Only in Beach
+            "objdata": {
+                "StartingWaveLocation": 5						\\ 9 là ngập sân, 8 là lùi phải 1 ô...
+            }
+        },
+		{
+            "aliases": [
+                "GriditemSpawn"
+            ],
+            "objclass": "ZombiePotionModuleProperties",
+            "objdata": {
+                "InitialPotionCount": 0,
+                "MaxPotionCount": 5,
+                "PotionSpawnTimer": {
+                    "Max": 5,
+                    "Min": 30
+                },
+                "PotionTypes": [
+                    "goldtile"
+                ]
+            }
+        },
+		{
+            "aliases": [
+                "InitialPlants"
+            ],
+            "objclass": "InitialPlantProperties",
+            "objdata": {
+				"IsInitialIntensiveCarrotPlacements": false,	\\ Burn'em all?
+                "InitialPlantPlacements": [
+                    {
+                        "Condition": "icecubed",
+                        "GridX": 0,
+                        "GridY": 0,
+						"Level": 0,								\\ Note: Actual level = this level + 1
+                        "TypeName": "sunflower"			
+                    }
+                ]
+            }
+        },
+		{
+            "aliases": [
+                "InitialZombies"
+            ],
+            "objclass": "InitialZombieProperties",
+            "objdata": {
+                "InitialZombiePlacements": [
+                    {
+                        "Condition": "icecubed",
+                        "GridX": 2,
+                        "GridY": 0,
+                        "TypeName": "tutorial"
+                    }
+                ]
+            }
+        },
+		{
+            "aliases": [
+                "InitialGriditem"
+            ],
+            "objclass": "InitialGridItemProperties",
+            "objdata": {
+                "InitialGridItemPlacements": [
+                    {
+                        "GridX": 1,
+                        "GridY": 0,
+                        "TypeName": "crater"
+                    }
+                ]
+            }
+        },
+		{
+            "aliases": [
+                "ProtectThePlant"
+            ],
+            "objclass": "ProtectThePlantChallengeProperties",
+            "objdata": {
+                "MustProtectCount": 1,
+                "Plants": [
+                    {
+                        "GridX": 0,
+                        "GridY": 1,
+						"Level": 2,
+                        "PlantType": "sunflower"
+                    }
+                ]
+            }
+        },
+		{
+            "aliases": [
+                "ChallengeModule"
+            ],
+            "objclass": "StarChallengeModuleProperties",
+            "objdata": {
+                "Challenges": [
+                    [
+						"RTID(BeatTheLevel@CurrentLevel)",
+                        "RTID(SunProduced@CurrentLevel)",
+                        "RTID(SimultaneousPlants@CurrentLevel)",
+                        "RTID(PlantsLost@CurrentLevel)",
+                        "RTID(MoldColonies@CurrentLevel)",
+                        "RTID(KillZombies@CurrentLevel)",
+                        "RTID(SaveMowers@CurrentLevel)"
+                    ]
+                ],
+                "ChallengesAlwaysAvailable": true
+            }
+        },
+        {
+            "aliases": [
+                "SunProduced"
+            ],
+            "objclass": "StarChallengeSunProducedProps",
+            "objdata": {
+                "TargetSun": 500
+            }
+        },
+        {
+            "aliases": [
+                "SimultaneousPlants"
+            ],
+            "objclass": "StarChallengeSimultaneousPlantsProps",
+            "objdata": {
+                "MaximumPlants": 5
+            }
+        },
+		{
+            "aliases": [
+                "PlantsLost"
+            ],
+            "objclass": "StarChallengePlantsLostProps",
+            "objdata": {
+                "MaximumPlantsLost": 10
+            }
+        },
+        {
+            "aliases": [
+                "MoldColonies"
+            ], 
+            "objclass": "MoldColonyChallengeProps", 
+            "objdata": {
+                "Locations": "RTID(Mold@CurrentLevel)"
+            }
+        }, 
+        {
+            "aliases": [
+                "Mold"
+            ], 
+            "objclass": "BoardGridMapProps", 
+            "objdata": {
+                "Values": [
+                    [1,1,1,1,1,0,0,0,0], 
+                    [0,0,0,0,0,0,0,0,0], 
+					[0,0,0,0,0,0,0,0,0], 
+					[0,0,0,0,0,0,0,0,0], 
+					[0,0,0,0,0,0,0,0,0]
+                ]
+            }
+        },
+		{
+            "aliases": [
+                "KillZombies"
+            ],
+            "objclass": "StarChallengeKillZombiesInTimeProps",
+            "objdata": {
+                "Time": 10,
+                "ZombiesToKill": 20
+            }
+        },
+		{
+            "aliases": [
+                "SaveMowers"
+            ],
+            "objclass": "StarChallengeSaveMowersProps",
+            "objdata": {}
+        },
+        {
+            "aliases": [
+                "BeatTheLevel"
+            ],
+            "objclass": "StarChallengeBeatTheLevelProps",
+            "objdata": {
+                "Description": "free-form",
+                "DescriptiveName": ""
+            }
+        },
+        {
+            "aliases": [
+                "SeedBank"
+            ],
+            "objclass": "SeedBankProperties",
+            "objdata": {
+                "PresetPlantList": [
+                    {
+                        "Level": -1,				
+                        "PlantType": "sunflower"
+                    }
+                ],
+				"PlantBlackList": [
+                    "peashooter"
+                ],
+				"PlantWhiteList": [
+                    "sunflower"
+                ],
+                "SelectionMethod": "chooser"				\\ chooser, preset
+            }
+        },
+		
+        {
+            "aliases": [
+                "Escalation"
+            ],
+            "objclass": "LevelEscalationModuleProperties",
+            "objdata": {
+                "FlagCount": 1,
+                "PlantfoodToSpawnCount": 0,
+                "PointIncrementPerWave": 0,
+                "StartingPoints": -1,
+                "WaveManagerProps": "RTID(WaveManager@CurrentLevel)",
+                "WavesPerFlag": 12,
+                "ZombiePool": [
+					"RTID(beach@ZombieTypes)"
+                ]
+            }
+        },
+        {
+            "aliases": [
+                "NewWaves"
+            ],
+            "objclass": "WaveManagerModuleProperties",
+            "objdata": {
+            }
+        },
+        {
+            "aliases": [
+                "WaveManager"
+            ],
+            "objclass": "WaveManagerProperties",
+            "objdata": {
+				"MinNextWaveHealthPercentage": 0.0,
+                "MaxNextWaveHealthPercentage": 0.0,
+				"ZombieCountdownFirstWaveSecs": 2.0,
+                "FlagWaveInterval": 1,
+                "WaveCount": 1,
+                "Waves": [
+					[
+                        "RTID(Wave1@CurrentLevel)"
+                    ]
+                ]
+            }
+        },
+{"aliases": ["Wave1"],"objclass": "SpawnZombiesJitteredWaveActionProps","objdata": {"Zombies": []}}
+    ],
+    "version": 1
+}

@@ -1,0 +1,340 @@
+
+        {
+            "aliases": [
+                "Escalation"
+            ],
+            "objclass": "LevelEscalationModuleProperties",
+            "objdata": {
+                "FlagCount": 1,
+                "PlantfoodToSpawnCount": 0,
+                "PointIncrementPerWave": 0,
+                "StartingPoints": -1,
+                "WaveManagerProps": "RTID(WaveManager@CurrentLevel)",
+                "WavesPerFlag": 12,
+                "ZombiePool": [
+					"RTID(dino@ZombieTypes)"
+                ]
+            }
+        },
+        {
+            "aliases": [
+                "NewWaves"
+            ],
+            "objclass": "WaveManagerModuleProperties",
+            "objdata": {
+            }
+        },
+        {
+            "aliases": [
+                "WaveManager"
+            ],
+            "objclass": "WaveManagerProperties",
+            "objdata": {
+                "FlagWaveInterval": 12,
+                "WaveCount": 12,
+				"ZombieCountdownHugeWaveDelay": 5,
+                "WaveSpendingPointIncrement": 0,
+                "WaveSpendingPoints": 0,
+                "Waves": [
+					[
+                        "RTID(Wave1@CurrentLevel)"
+                    ],
+					[
+                        "RTID(Wave2@CurrentLevel)"
+                    ],
+					[
+                        "RTID(Wave3@CurrentLevel)",
+						"RTID(JamPunk@CurrentLevel)"
+                    ],
+					[
+                        "RTID(Wave4@CurrentLevel)"
+                    ],
+					[
+                        "RTID(Wave5@CurrentLevel)"
+                    ],
+					[
+                        "RTID(Wave6@CurrentLevel)"
+                    ],
+					[
+                        "RTID(Wave7@CurrentLevel)"
+                    ],
+					[
+                        "RTID(Wave8@CurrentLevel)",
+						"RTID(JamRap@CurrentLevel)"
+                    ],
+					[
+                        "RTID(Wave9@CurrentLevel)"
+                    ],
+					[
+                        "RTID(Wave10@CurrentLevel)",
+						"RTID(JamPunk@CurrentLevel)"
+                    ],
+					[
+                        "RTID(Wave11@CurrentLevel)"
+                    ],
+					[
+                        "RTID(Wave12@CurrentLevel)",
+						"RTID(JamRap@CurrentLevel)"
+                    ]
+                ]
+            }
+        },
+        {
+            "aliases": [
+                "Blank"
+            ],
+            "objclass": "SpawnZombiesJitteredWaveActionProps",
+            "objdata": {
+                "Zombies": [
+                ]
+            }
+        },
+		{
+            "aliases": ["JamRap"],
+			"objclass": "SpawnZombiesJitteredWaveActionProps","objdata": {"NotificationEvents": ["jam_rap"]}
+        },
+		{
+            "aliases": ["JamPop"],
+			"objclass": "SpawnZombiesJitteredWaveActionProps","objdata": {"NotificationEvents": ["jam_pop"]}
+        },
+		{
+            "aliases": ["JamPunk"],
+			"objclass": "SpawnZombiesJitteredWaveActionProps","objdata": {"NotificationEvents": ["jam_punk"]}
+        },
+		{
+            "aliases": ["Jam8bit"],
+			"objclass": "SpawnZombiesJitteredWaveActionProps","objdata": {"NotificationEvents": ["jam_8bit"]}
+        },
+		{
+            "aliases": ["JamMetal"],
+			"objclass": "SpawnZombiesJitteredWaveActionProps","objdata": {"NotificationEvents": ["jam_metal"]}
+        },
+		{
+            "aliases": ["JamBallad"],
+			"objclass": "SpawnZombiesJitteredWaveActionProps","objdata": {"NotificationEvents": ["jam_ballad"]}
+        },
+		{
+            "aliases": [
+                "Wave1"
+            ],
+            "objclass": "SpawnZombiesJitteredWaveActionProps",
+            "objdata": {
+                "AdditionalPlantfood": 0,
+				"ZombieSpawnPattern": "ZombieSpawnerPatternStaggered",			\\ ZombieSpawnerPatternStaggered, ZombieSpawnerPatternDelta, or delete the whole line
+                "Zombies": [
+                    {
+                        "Type": "RTID(mummy@ZombieTypes)"
+                    },
+					{
+                        "Row":1,"Type": "RTID(mummy@ZombieTypes)"
+                    }
+                ]
+            }
+        },
+		{
+            "aliases": [
+                "Lowtide"
+            ],
+            "objclass": "BeachStageEventZombieSpawnerProps",
+            "objdata": {
+                "ColumnEnd": 0,
+                "ColumnStart": 0,
+                "GroupSize": 0,
+                "TimeBeforeFullSpawn": 0.5,
+                "TimeBetweenGroups": 0.25,
+                "WaveStartMessage": "Whatever",
+                "ZombieCount": 0,
+                "ZombieName": "prospector"
+            }
+        },
+		{
+            "aliases": [
+                "Groundspawn"
+            ],
+            "objclass": "SpawnZombiesFromGroundSpawnerProps",
+            "objdata": {
+                "ColumnStart": 5,
+                "ColumnEnd": 6,
+                "Zombies": [
+                    {
+                        "Type": "RTID(mummy@ZombieTypes)"
+                    },
+					{
+                        "Row":1,"Type": "RTID(mummy@ZombieTypes)"
+                    }
+                ]
+            }
+        },
+		{
+            "aliases": [
+                "Sandstorm"
+            ],
+            "objclass": "StormZombieSpawnerProps",
+            "objdata": {
+                "ColumnEnd": 6,
+                "ColumnStart": 3,
+                "GroupSize": 5,
+                "TimeBetweenGroups": 5,
+                "Waves": "",
+                "Type": "sandstorm",												\\ sandstorm, snowstorm
+                "Zombies": [
+                    {
+                        "Type": "RTID(mummy@ZombieTypes)"
+                    },
+                    {
+                        "Type": "RTID(mummy@ZombieTypes)"
+                    }
+                ]
+            }
+        },
+		{
+            "aliases": [
+                "RaidingParty"
+            ],
+            "objclass": "RaidingPartyZombieSpawnerProps",
+            "objdata": {
+				"SwashbucklerCount": 2,
+                "GroupSize": 10,
+                "TimeBetweenGroups": 1
+            }
+        },
+		{
+            "aliases": [
+                "GridSpawn"
+            ],
+            "objclass": "SpawnGravestonesWaveActionProps",
+            "objdata": {
+                "GravestonePool": [
+                    {
+                        "Count": 2,
+                        "Type": "RTID(gravestone_dark@GridItemTypes)"
+                    }
+                ],
+                "SpawnEffectAnimID": "POPANIM_EFFECTS_TOMBSTONE_DARK_SPAWN_EFFECT",
+                "SpawnPositionsPool": [
+                    {
+                        "mX": 7,
+                        "mY": 0
+                    },
+                    {
+                        "mX": 7,
+                        "mY": 1
+                    }
+                ],
+                "SpawnSoundID": "Play_Zomb_Egypt_TombRaiser_Grave_Rise"
+            }
+        },
+		{
+            "aliases": [
+                "SpawnFromGrid"
+            ],
+            "objclass": "SpawnZombiesFromGridItemSpawnerProps",
+            "objdata": {
+                "AdditionalPlantfood": "0",
+                "GridTypes": [
+                    "RTID(gravestone_dark@GridItemTypes)"
+                ],
+                "Zombies": [
+                    {
+                        "Type": "RTID(dark@ZombieTypes)"
+                    }
+                ]
+            }
+        },
+		{
+            "aliases": [
+                "FlyingImp"
+            ],
+            "objclass": "SpiderRainZombieSpawnerProps",
+            "objdata": {
+                "ColumnEnd": 7,
+                "ColumnStart": 6,
+                "GroupSize": 1,
+                "SpiderCount": 6,
+                "SpiderZombieName": "future_imp",								\\ Imps only
+                "TimeBeforeFullSpawn": 3,
+                "TimeBetweenGroups": 1,
+                "WaveStartMessage": "[WARNING_SPIDERRAIN]",
+                "ZombieFallTime": 2
+            }
+        },
+		{
+            "aliases": [
+                "TideChange"
+            ],
+            "objclass": "TidalChangeWaveActionProps",
+            "objdata": {
+                "TidalChange": {
+                    "ChangeAmount": 5,											\\ Number of flooded collumn
+                    "ChangeType": "absolute"
+                }
+            }
+        },
+		{
+            "aliases": [
+                "Wave10FrostWindEvent0"
+            ],
+            "objclass": "FrostWindWaveActionProps",
+            "objdata": {
+                "Winds": [
+                    {
+                        "Direction": "right",
+                        "Row": 1
+                    },
+                    {
+                        "Direction": "left",
+                        "Row": 3
+                    }
+                ]
+            }
+        },
+		{
+            "aliases": [
+                "ParachuteRain"
+            ],
+            "objclass": "ParachuteRainZombieSpawnerProps",
+            "objdata": {
+                "ColumnEnd": 7,
+                "ColumnStart": 4,
+                "GroupSize": 2,
+                "SpiderCount": 4,
+                "SpiderZombieName": "lostcity_lostpilot",
+                "TimeBeforeFullSpawn": 1,
+                "TimeBetweenGroups": 0.2,
+                "WaveStartMessage": "[WARNING_PARACHUTERAIN]",
+                "ZombieFallTime": 1.5
+            }
+        },
+		{
+            "aliases": [
+                "Portal"
+            ],
+            "objclass": "SpawnModernPortalsWaveActionProps",
+            "objdata": {
+                "PortalColumn": 3,
+                "PortalRow": 2,
+                "PortalType": "egypt",
+                "SpawnEffectAnimID": "",
+                "SpawnSoundID": ""
+            }
+        },
+		{
+            "aliases": [
+                "DinoSpawn"
+            ],
+            "objclass": "DinoWaveActionProps",
+            "objdata": {
+                "DinoRow": 4,
+                "DinoType": "tyranno",											\\ raptor, ptero, stego, tyranno, ankylo
+                "DinoWaveDuration": "0"
+            }
+        },
+		{
+            "aliases": [
+                "SunDropper"
+            ],
+            "objclass": "SunDropperWaveActionProps",
+            "objdata": {
+                "SunAmountToDrop": 500
+            }
+        }
