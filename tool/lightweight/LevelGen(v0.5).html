@@ -48,7 +48,7 @@
         var maxPCount;
         var spawnTimer = {};
 
-		var moldConfig= [];
+        var moldConfig = [];
 
         //functions
         var completeObjdata;
@@ -111,7 +111,7 @@
                 case 14:
                     handleMold(); //WHY THE FUCK AM I HERE ALREADY
                     break;
-                    case 15:
+                case 15:
                     handleWave();
                 default:
                 //hacker detected!!
@@ -406,11 +406,11 @@
             };
             myGroupBox.appendChild(createButton('Add', clickHandler));
             clickHandler = function () {
-                userInput = function() {
+                userInput = function () {
                     itemsObj.InitialPotionCount = iPCount;
                     itemsObj.MaxPotionCount = maxPCount;
                     itemsObj.PotionSpawnTimer = spawnTimer;
-                    itemsObj.PotionTypes = spawnObj; 
+                    itemsObj.PotionTypes = spawnObj;
                 };
                 completeObjdata();
                 completeObjdata.createObj();
@@ -507,7 +507,7 @@
                     { "name": "TargetSun", "id": "targetSun", "displayTxt": "Target sun to produce: ", "type": "number", "min": "0", "max": "" }
                 ]
             }
-			runCreateObj.toSubmit = false;
+            runCreateObj.toSubmit = false;
             createUI();
             var sunPAlias = ['SunProduced'], sunPObj = {};
             completeObjdata = function () {
@@ -525,7 +525,7 @@
                     { "name": "MaximumPlants", "id": "maxPlantId", 'displayTxt': 'Maximum amount of plants allowed onscreen? ', 'type': 'number', 'min': '0', 'max': '' }
                 ]
             }
-		runCreateObj.toSubmit = false;
+            runCreateObj.toSubmit = false;
             createUI();
             var maxPlantsAlias = ["SimultaneousPlants"], maxPlantsObj = {};
             completeObjdata = function () {
@@ -542,7 +542,7 @@
                     { 'name': 'MaximumPlantsLost', 'id': 'maxPlantLostID', 'displayTxt': 'Maximum amount of plants to lose? ', 'type': 'number', 'min': '0', 'max': '' }
                 ]
             }
-		runCreateObj.toSubmit = false;
+            runCreateObj.toSubmit = false;
             createUI();
             var maxPlantLossAlias = ['PlantsLost'], maxPLossObj = {};
             completeObjdata = function () {
@@ -570,14 +570,14 @@
                     { 'display': 'Row 1 ' }, { 'display': 'Row 2 ' }, { 'display': 'Row 3 ' }, { 'display': 'Row 4 ' }, { 'display': 'Row 5 ' }
                 ]
             }
-                       var c = 0;
-					   
-		    var myValidator = function(e) {
-			  if(e) {
-			     var inptBox = e.target;
-			     if (inptBox.value.length > inptBox.maxLength) inptBox.value = inptBox.value.slice(0, inptBox.maxLength);
-			  }
-			};
+            var c = 0;
+
+            var myValidator = function (e) {
+                if (e) {
+                    var inptBox = e.target;
+                    if (inptBox.value.length > inptBox.maxLength) inptBox.value = inptBox.value.slice(0, inptBox.maxLength);
+                }
+            };
             moldConfig.data.forEach(function createMoldUI(param) {
                 var x = document.createTextNode(param.display);
                 myGroupBox.appendChild(x);
@@ -589,10 +589,10 @@
                     btn.max = 1;
                     btn.maxLength = 1;
                     btn.value = '0';
-                    btn.id = "moldCollect_" + c+"_"+i;
+                    btn.id = "moldCollect_" + c + "_" + i;
                     myGroupBox.appendChild(btn);
-					btn.addEventListener('oninput', myValidator, true);
-					btn.addEventListener('input', myValidator, true);
+                    btn.addEventListener('oninput', myValidator, true);
+                    btn.addEventListener('input', myValidator, true);
                     addText(" ");
                     i++;
                 }
@@ -600,23 +600,23 @@
                 c++;
             }
             )
-            var clickHandler = function() {
+            var clickHandler = function () {
                 moldReadData();
             }
             myGroupBox.appendChild(createButton("Generate object", clickHandler));
         }
 
         function moldReadData() {
-            var c = 0; var r=0; var moldInptData = []; rows = [];
-			
-			for(c=0; c < moldConfig.data.length; c++) {
-			     moldInptData[c] = [];
-			    for (r=0; r<9; r++) {
-				   var moldCls = document.getElementById("moldCollect_" + c + "_" + r).value;
-				   moldInptData[c].push(parseInt(moldCls))
-				}
-			}
-			
+            var c = 0; var r = 0; var moldInptData = []; rows = [];
+
+            for (c = 0; c < moldConfig.data.length; c++) {
+                moldInptData[c] = [];
+                for (r = 0; r < 9; r++) {
+                    var moldCls = document.getElementById("moldCollect_" + c + "_" + r).value;
+                    moldInptData[c].push(parseInt(moldCls))
+                }
+            }
+
             console.log(moldInptData);
         }
 
@@ -624,28 +624,28 @@
             var seedBankOption = {}, presetList = [], presetListObj = {}, blacklistArr = [], whitelistArr = [], suggestList = [];
             clearInputArea();
             addText('Preset list: ');
-            myGroupBox.appendChild(createInput('text', 'pNames'));addText('   at level  ');myGroupBox.appendChild(createInput('number', 'pLvl'));
-            var clickHandler = function() {
+            myGroupBox.appendChild(createInput('text', 'pNames')); addText('   at level  '); myGroupBox.appendChild(createInput('number', 'pLvl'));
+            var clickHandler = function () {
                 presetListObj.PlantType = readTxtInput('pNames');
                 presetListObj.Level = readIntInput('pLvl');
                 presetList.push(presetListObj);
                 //empty pls
             }; addText('  ')
             myGroupBox.appendChild(createButton('Add', clickHandler));
-            newLine();newLine();
+            newLine(); newLine();
             addText('Plant blacklist: ');
             myGroupBox.appendChild(createInput('text', 'blackListedP'));
             clickHandler = function () {
                 blacklistArr.push(readTxtInput('blacklistedP'));
             };
-            addText('  ');myGroupBox.appendChild(createButton('Add', clickHandler));
-            newLine();newLine();
+            addText('  '); myGroupBox.appendChild(createButton('Add', clickHandler));
+            newLine(); newLine();
             addText('Plant whilelist: ')
             myGroupBox.appendChild(createInput('text', 'whitelistedP'));
             clickHandler = function () {
                 whitelistArr.push(readTxtInput('whitelistedP'));
             }
-            addText('  ');myGroupBox.appendChild(createButton('Add', clickHandler));
+            addText('  '); myGroupBox.appendChild(createButton('Add', clickHandler));
             newLine(); newLine();
             addText('Suggest plant list: ');
             myGroupBox.appendChild(createInput('text', 'listSuggest'));
@@ -662,6 +662,14 @@
             //too lazy to create the obj now to later
         }
         //waves loudly ---- this is the wave gen reeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee...
+        function handleWave() {
+            var waveButtons = ['WaveManager', 'WaveManagerProps', 'Escalation'];
+            var clickHandler = function () {
+                waveButtons.forEach(function () {
+                    myGroupBox.appendChild(createButton(this));
+                })
+            }
+        }
 
         function myReadData() {
             var a = {};
@@ -781,6 +789,14 @@
             var val = document.getElementById(myId).value;
             if (val != "") {
                 return val;
+            }
+        }
+
+        function readBoolInput(myId) {
+            var val = document.getElementById(myId).value;
+            if (val.checked) {
+                val = true;
+
             }
         }
     </script>
