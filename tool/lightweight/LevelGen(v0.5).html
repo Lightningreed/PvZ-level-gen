@@ -664,11 +664,20 @@
         //waves loudly ---- this is the wave gen reeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee...
         function handleWave() {
             var waveButtons = ['WaveManager', 'WaveManagerProps', 'Escalation'];
-            var clickHandler = function () {
-                waveButtons.forEach(function () {
-                    myGroupBox.appendChild(createButton(this));
-                })
+            clearInputArea();
+            var handler = function() {
+                alert('Lets manage a wave!');
             }
+            myGroupBox.appendChild(createButton(waveButtons[0], handler));  addText('      ');
+
+            handler = function() {
+                alert('Lets manage a wave props!');
+            }
+            myGroupBox.appendChild(createButton(waveButtons[1], handler));  addText('      ');
+            handler = function() {
+                alert('Don\'t know what is Escalation. :(');
+            }
+            myGroupBox.appendChild(createButton(waveButtons[2], handler));
         }
 
         function myReadData() {
