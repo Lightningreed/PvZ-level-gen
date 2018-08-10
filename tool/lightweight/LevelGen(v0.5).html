@@ -521,6 +521,7 @@
                     { "name": "MaximumPlants", "id": "maxPlantId", 'displayTxt': 'Maximum amount of plants allowed onscreen? ', 'type': 'number', 'min': '0', 'max': '' }
                 ]
             }
+		runCreateObj.toSubmit = false;
             createUI();
             var maxPlantsAlias = ["SimultaneousPlants"], maxPlantsObj = {};
             completeObjdata = function () {
@@ -537,6 +538,7 @@
                     { 'name': 'MaximumPlantsLost', 'id': 'maxPlantLostID', 'displayTxt': 'Maximum amount of plants to lose? ', 'type': 'number', 'min': '0', 'max': '' }
                 ]
             }
+		runCreateObj.toSubmit = false;
             createUI();
             var maxPlantLossAlias = ['PlantsLost'], maxPLossObj = {};
             completeObjdata = function () {
