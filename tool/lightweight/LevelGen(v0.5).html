@@ -621,13 +621,18 @@
         }
 
         function handleSeedBank() {
+            var seedBankOption = {}, presetList = [], presetListObj = {};
             clearInputArea();
             addText('Preset list: ');
-            myGroupBox.appendChild(createInput('text'));addText('   at level  ');myGroupBox.appendChild(createInput('number'));
+            myGroupBox.appendChild(createInput('text', 'pNames'));addText('   at level  ');myGroupBox.appendChild(createInput('number', 'pLvl'));
             var clickHandler = function() {
-
-            }
-
+                presetListObj.PlantType = readTxtInput('pNames');
+                presetListObj.Level = readIntInput('pLvl');
+                presetList.push(presetListObj);
+                //empty pls
+            }; addText('  ')
+            myGroupBox.appendChild(createButton('Add', clickHandler));
+            
             newLine();newLine();
         }
         //waves loudly ---- this is the wave gen reeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee...
