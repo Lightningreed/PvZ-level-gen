@@ -664,22 +664,51 @@
         //waves loudly ---- this is the wave gen reeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee...
         function handleWave() {
             var waveButtons = ['WaveManager', 'WaveManagerProps', 'Escalation'];
-            var waveEvent = ['Jam', 'LowTide', 'GroundSpawn', 'Sandstorm', 'RaidingParty', 'GirdSpawn', 'SpiderRain','TideChange', 'FrostWind','Sandstorm', 'ParachuteRain', 'Portal','Dino','SunDropper'];
-            clearInputArea();
-            var handler = function() {createEventButton();
+            var waveEvent = ['Jam', 'LowTide', 'GroundSpawn', 'Sandstorm', 'RaidingParty', 'GirdSpawn', 'SpiderRain', 'TideChange', 'FrostWind', 'Sandstorm', 'ParachuteRain', 'Portal', 'Dino', 'SunDropper'];
+            var waveMgr = [];
+             clearInputArea();
+            var handler = function () {
+                createEventButton();
             }
-            myGroupBox.appendChild(createButton(waveButtons[0], handler));  addText('      ');
+            myGroupBox.appendChild(createButton(waveButtons[0], handler)); addText('      ');
 
-            handler = function() {
+            handler = function () {
                 alert('Lets manage a wave props!');
             }
-            myGroupBox.appendChild(createButton(waveButtons[1], handler));  addText('      ');
-            handler = function() {
+            myGroupBox.appendChild(createButton(waveButtons[1], handler)); addText('      ');
+            handler = function () {
                 alert('Don\'t know what is Escalation. :(');
             }
             myGroupBox.appendChild(createButton(waveButtons[2], handler));
             function createEventButton() {
-                waveEvent.forEach(function(){newLine();myGroupBox.appendChild(createButton(this))})
+                newLine(); newLine();
+                waveEvent.forEach(function (a) { addText(' '); myGroupBox.appendChild(createButton(a, clickHandler, a, 'evButton')) })
+            }
+            var clickHandler = function () {
+                var a = document.getElementsByClassName('evButton');
+                Array.from(a);
+                var evButtonCount = a.length;
+                for (var i = 0; i <= evButtonCount; i += 1) {
+                    a[i].onclick = function () {
+                        let chosen = this.id;
+                        switch (chosen) {
+                            case "Jam":
+                            let arr = ['Rap', 'Punk', '8Bit', 'Metal', 'Ballad'];
+                            newLine();
+                            addText('Music?');
+                            newLine();
+                            arr.forEach(function(songName){
+                                myGroupBox.appendChild(createButton(songName, handleSong));
+                            })
+                            break;
+                            case "LowTide":
+                            
+                        }
+                    };
+                }
+            }
+            var handleSong = function () {
+
             }
         }
 
@@ -762,12 +791,13 @@
         }
 
         //creates button object with name and click handler
-        function createButton(name, clickHandler, id = '') {
+        function createButton(name, clickHandler, id = '', className = '') {
             var button = document.createElement('button');
             button.innerHTML = name;
             button.onclick = clickHandler;
             button.type = "button";
-            button.id = id
+            button.id = id;
+            button.className = className;
             return button;
         }
 
@@ -808,8 +838,13 @@
             var val = document.getElementById(myId).value;
             if (val.checked) {
                 val = true;
-
+                return val;
             }
+        }
+
+        function validateWave(a) {
+            var val = "RTID("+ a + "@CurrentLevel)";
+            return val;
         }
     </script>
 </body>
