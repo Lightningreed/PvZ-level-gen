@@ -664,9 +664,10 @@
         //waves loudly ---- this is the wave gen reeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee...
         function handleWave() {
             var waveButtons = ['WaveManager', 'WaveManagerProps', 'Escalation'];
+            var waveEvent = ['Jam', 'LowTide', 'GroundSpawn', 'Sandstorm', 'RaidingParty', 'GirdSpawn', 'SpiderRain','TideChange', 'FrostWind','Sandstorm', 'ParachuteRain', 'Portal','Dino','SunDropper'];
             clearInputArea();
             var handler = function() {
-                alert('Lets manage a wave!');
+
             }
             myGroupBox.appendChild(createButton(waveButtons[0], handler));  addText('      ');
 
@@ -678,6 +679,9 @@
                 alert('Don\'t know what is Escalation. :(');
             }
             myGroupBox.appendChild(createButton(waveButtons[2], handler));
+            function createEventButton() {
+                waveEvent.forEach(function(){newLine();myGroupBox.appendChild(createButton(this))})
+            }
         }
 
         function myReadData() {
