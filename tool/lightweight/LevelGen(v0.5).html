@@ -666,8 +666,7 @@
             var waveButtons = ['WaveManager', 'WaveManagerProps', 'Escalation'];
             var waveEvent = ['Jam', 'LowTide', 'GroundSpawn', 'Sandstorm', 'RaidingParty', 'GirdSpawn', 'SpiderRain','TideChange', 'FrostWind','Sandstorm', 'ParachuteRain', 'Portal','Dino','SunDropper'];
             clearInputArea();
-            var handler = function() {
-
+            var handler = function() {createEventButton();
             }
             myGroupBox.appendChild(createButton(waveButtons[0], handler));  addText('      ');
 
