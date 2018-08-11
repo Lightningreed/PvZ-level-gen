@@ -30,6 +30,8 @@
     <form>
         <fieldset id='myGroupBox'>
         </fieldset>
+		<fieldset id='mySubGroupBox' hidden>
+        </fieldset>
     </form>
 
     <script>
@@ -61,8 +63,8 @@
         function onAliasSelect() {
             myGroupBox = document.getElementById("myGroupBox");
             chosen = document.getElementById("reee").selectedIndex;
-            //alert("Chosen: "+ chosen);
-
+            hideSubBox();
+		    
             switch (chosen) {
                 case 0:
                     handleEndangered();
@@ -128,7 +130,7 @@
                 ]
             };
             runCreateObj.toSubmit = true;
-            createUI(myGroupBox);
+            createUI();
 
             //all var to create ed plants
             var ePlants = [], endangeredObj = {}, eAlias = ["ProtectThePlant"], ePlantsData = {};
@@ -155,7 +157,7 @@
                     { "name": "HomeworldToExcludeFromOverride", "id": "cooldownExclusion", "displayTxt": "Exclude a homeworld from CooldownMod", "type": "text" }
                 ]
             };
-            createUI(myGroupBox);
+            createUI();
             completeObjdata = function () {
                 runCreateObj.run = false;
                 var cModObj = {}, cModAlias = ["CooldownMod"];
@@ -176,7 +178,7 @@
                     { "name": "ZombieDamage", "id": "sBombzDamage", "displayTxt": "How hurtful will the bomb be to zombies? ", "type": "number", "min": "0", "max": "" }
                 ]
             };
-            createUI(myGroupBox);
+            createUI();
             completeObjdata = function () {
                 runCreateObj.run = false;
                 var sBombsObj = {}, sBombsAlias = ["SunBombChallengeProperties"];
@@ -194,7 +196,7 @@
                     { "name": "Speedy", "id": "speedChk", "displayTxt": "Will zombies in this level be faster than normal? (checked is true) ", "type": "checkbox" }
                 ]
             };
-            createUI(myGroupBox);
+            createUI();
             //var originalInput = document.getElementById('spedUpz');
             //var newCheckbox = document.createElement("input");
             //newCheckbox.setAttribute("type", "checkbox");
@@ -227,7 +229,7 @@
                     { "name": "LootOverride", "id": "lootToOverride", "displayTxt": "Override with which type of loot? ", "type": "text" }
                 ]
             }; runCreateObj.toSubmit = true;
-            createUI(myGroupBox);
+            createUI();
             var lootOverrideArray = [], lootOverrideAlias = ["LootOverride"], lootOverrideObj = {}, lootOverrideObjdata = {}, validZType;
             completeObjdata = function () {
                 runCreateObj.run = true;
@@ -255,7 +257,7 @@
                     { "name": "PlankRows", "id": "PSPlank", "displayTxt": "Which row do you want to place plank on? (only work for Pirate Seas) ", "type": "number", "min": "0", "max": "4" }
                 ]
             }; runCreateObj.toSubmit = true;
-            createUI(myGroupBox);
+            createUI();
             var plankRows = [], plankObj = {}, plankObjdata = {}, plankAlias = ["PiratePlanks"];
             completeObjdata = function () {
                 runCreateObj.run = true;
@@ -432,7 +434,7 @@
                 ]
             }
             runCreateObj.toSubmit = true;
-            createUI(myGroupBox);
+            createUI();
             var intPlants = [], intPObj = {}, intAlias = ["InitialPlants"], intPlantsData = {}, confirmLastOfObj = [];
             completeObjdata = function () {
                 runCreateObj.run = true;
@@ -461,7 +463,7 @@
                 ]
             }
             runCreateObj.toSubmit = true;
-            createUI(myGroupBox);
+            createUI();
             var intZombies = [], intZObj = {}, intZAlias = ["InitialZombies"], intZData = {};
             completeObjdata = function () {
                 runCreateObj.run = true;
@@ -486,7 +488,7 @@
                 ]
             }
             runCreateObj.toSubmit = true;
-            createUI(myGroupBox);
+            createUI();
             var intItems = [], intIObj = {}, intIAlias = ['InitialGridItem'], intIData = {};
             completeObjdata = function () {
                 runCreateObj.run = true;
@@ -508,7 +510,7 @@
                 ]
             }
             runCreateObj.toSubmit = false;
-            createUI(myGroupBox);
+            createUI();
             var sunPAlias = ['SunProduced'], sunPObj = {};
             completeObjdata = function () {
                 runCreateObj.run = false;
@@ -526,7 +528,7 @@
                 ]
             }
             runCreateObj.toSubmit = false;
-            createUI(myGroupBox);
+            createUI();
             var maxPlantsAlias = ["SimultaneousPlants"], maxPlantsObj = {};
             completeObjdata = function () {
                 runCreateObj.run = false;
@@ -543,7 +545,7 @@
                 ]
             }
             runCreateObj.toSubmit = false;
-            createUI(myGroupBox);
+            createUI();
             var maxPlantLossAlias = ['PlantsLost'], maxPLossObj = {};
             completeObjdata = function () {
                 runCreateObj.run = false;
@@ -686,44 +688,38 @@
                 waveEvent.forEach(function (a) { addText(' '); myGroupBox.appendChild(createButton(a, clickHandler, a, 'evButton')) })
             }
             var clickHandler = function () {
-                var a = document.getElementsByClassName('evButton');
-                var b =  Array.from(a);
-                console.log(JSON.stringify(b));
-                var evButtonCount = a.length;
-                for (let i = 0; i < evButtonCount; i += 1) {
-                    b[i].onclick = function () {
-                        let chosen = this.id;
-                        toggleSubField('unset');
-                        switch (chosen) {
-                            case "Jam":
-                                let arr = ['Rap', 'Punk', '8Bit', 'Metal', 'Ballad'];
-                                newLine();
-                                addText('Music?');
-                                newLine();
-                                arr.forEach(function (songName) {
-                                    myGroupBox.appendChild(createButton(songName, handleSong));
-                                })
-                                break;
-                            case "LowTide":
-                                myGrid = {
-                                    'data': [
-                                        { 'name': 'ColumnEnd', 'id': 'colEndTide', 'displayTxt': 'Column end: ', 'type': 'number', 'min': '0', 'max': '9' },
-                                        { 'name': 'ColumnStart', 'id': 'colStartTide', 'displayTxt': 'Column start: ', 'type': 'number', 'min': '0', 'max': '9' },
-                                        { 'name': 'TimeBeforeFullSpawn', 'id': 'timebFullSpawnTide', 'displayTxt': 'Time before full spawn: ', 'type': 'number', 'min': '0', 'max': '' },
-                                        { 'name': 'TimeBetweenGroup', 'id': 'timebweenGrTide', 'displayTxt': 'Time between group: ', 'type': 'number', 'min': '0', 'max': '' },
-                                        { 'name': 'WaveStartMessage', 'id': 'waveMessage', 'displayTxt': 'Wave start message', 'type': 'text' },
-                                        { 'name': 'ZombieCount', 'id': 'zCountTide', 'displayTxt': 'Zombie count: ', 'type': 'number', 'min': '0', 'max': '' },
-                                        { 'name': 'ZombieType', 'id': 'zTypeTide', 'displayTxt': 'Zombie ambush type: ', 'type': 'text' }
+			    showSubBox();
+				clearSubInputArea();
+				switch (this.id) {
+					case "Jam":
+						let arr = ['Rap', 'Punk', '8Bit', 'Metal', 'Ballad'];
+						newSubLine();
+						addSubText('Music?');
+						newSubLine();
+						arr.forEach(function (songName) {
+								mySubGroupBox.appendChild(createButton(songName, handleSong));
+							});
+						break;
+					case "LowTide":
+                        myGrid = {
+                           'data': [
+                                { 'name': 'ColumnEnd', 'id': 'colEndTide', 'displayTxt': 'Column end: ', 'type': 'number', 'min': '0', 'max': '9' },
+                                { 'name': 'ColumnStart', 'id': 'colStartTide', 'displayTxt': 'Column start: ', 'type': 'number', 'min': '0', 'max': '9' },
+                                { 'name': 'TimeBeforeFullSpawn', 'id': 'timebFullSpawnTide', 'displayTxt': 'Time before full spawn: ', 'type': 'number', 'min': '0', 'max': '' },
+                                { 'name': 'TimeBetweenGroup', 'id': 'timebweenGrTide', 'displayTxt': 'Time between group: ', 'type': 'number', 'min': '0', 'max': '' },
+                               { 'name': 'WaveStartMessage', 'id': 'waveMessage', 'displayTxt': 'Wave start message', 'type': 'text' },
+                               { 'name': 'ZombieCount', 'id': 'zCountTide', 'displayTxt': 'Zombie count: ', 'type': 'number', 'min': '0', 'max': '' },
+                               { 'name': 'ZombieType', 'id': 'zTypeTide', 'displayTxt': 'Zombie ambush type: ', 'type': 'text' }
                                     ]
                                 }
                                 runCreateObj.toSubmit = false;
-                                createUI(childField);
-                        }
-                    };
-                }
-            }
+                                createSubUI();
+                        };
+                };
+                
+            
             var handleSong = function () {
-
+				alert('lovely Song!');
             }
         }
 
@@ -748,8 +744,10 @@
             a['RailCarts'] = railCarts;
             return a;
         }
+		
+		
         //utilities
-        //-------------------------------------------------------
+        //--------------------------------------------------------------------------------
         function clearInputArea() {
             while (myGroupBox.firstChild) {
                 myGroupBox.removeChild(myGroupBox.firstChild);
@@ -757,8 +755,15 @@
             myGroupBox.appendChild(document.createElement('br'))
         }
 
+		function clearSubInputArea() {
+            while (mySubGroupBox.firstChild) {
+                mySubGroupBox.removeChild(mySubGroupBox.firstChild);
+            }
+            mySubGroupBox.appendChild(document.createElement('br'))
+        }
+		
         //clears previous and create new input ui
-        function createUI(a) {
+        function createUI() {
             clearInputArea();
 
             var clsName = myGrid.className;
@@ -768,7 +773,7 @@
                 //myGroupBox.appendChild(x);
 
                 var x = document.createTextNode(aliasesObject.displayTxt);
-                a.appendChild(x);
+                myGroupBox.appendChild(x);
                 var bth = document.createElement('input');
                 bth.type = 'text';
                 bth.id = aliasesObject.id;
@@ -805,6 +810,52 @@
             myGroupBox.appendChild(createButton('Submit and generate chosen object', clickHandler));
         }
 
+		function createSubUI() {
+            clearSubInputArea();
+
+            var clsName = myGrid.className;
+            //lay input boxes
+            myGrid.data.forEach(function insertObject(aliasesObject) {
+                var x = document.createTextNode(aliasesObject.displayTxt);
+                mySubGroupBox.appendChild(x);
+                var bth = document.createElement('input');
+                bth.type = 'text';
+                bth.id = aliasesObject.id;
+                bth.className = 'myClass';
+                bth.type = aliasesObject.type;
+                if (aliasesObject.type === "number") {
+                    bth.min = aliasesObject.min;
+                    bth.max = aliasesObject.max;
+                }
+                mySubGroupBox.appendChild(bth);
+                mySubGroupBox.appendChild(document.createElement('br'))
+            }
+            );
+
+            var clickHandler = function () {
+                userInput = myReadData();
+                completeObjdata();
+                myGrid.data.forEach(function insertObject(aliasesObject) {
+                    document.getElementById(aliasesObject.id).value = "";
+                })
+            }
+            if (runCreateObj.toSubmit === true) {
+                mySubGroupBox.appendChild(createButton('Submit', clickHandler));
+            }
+
+
+            clickHandler = function () {
+                userInput = myReadData();
+                completeObjdata();
+                if (runCreateObj.run == true) {
+                    completeObjdata.createObj();
+                }
+            };
+            mySubGroupBox.appendChild(createButton('Submit and generate chosen object', clickHandler));
+        }
+		
+		
+		
         //creates button object with name and click handler
         function createButton(name, clickHandler, id = '', className = '') {
             var button = document.createElement('button');
@@ -830,9 +881,16 @@
         function newLine() {
             myGroupBox.appendChild(document.createElement('br'));
         }
+		function newSubLine() {
+            mySubGroupBox.appendChild(document.createElement('br'));
+        }
 
-        function addText(txtt) {
+		function addText(txtt) {
             myGroupBox.appendChild(document.createTextNode(txtt));
+        }
+		
+        function addSubText(txtt) {
+            mySubGroupBox.appendChild(document.createTextNode(txtt));
         }
 
         function readIntInput(myId) {
@@ -868,6 +926,14 @@
             a.id = "childField";
             myGroupBox.appendChild(a);
         }
+		
+		function hideSubBox() {
+		    document.getElementById('mySubGroupBox').setAttribute('hidden',true);
+		}
+		
+		function showSubBox() {
+			document.getElementById('mySubGroupBox').removeAttribute('hidden');
+		}
     </script>
 </body>
 
