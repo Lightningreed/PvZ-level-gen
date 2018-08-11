@@ -690,7 +690,7 @@
                 var b =  Array.from(a);
                 console.log(JSON.stringify(b));
                 var evButtonCount = a.length;
-                for (let i = 0; i <= evButtonCount; i += 1) {
+                for (let i = 0; i < evButtonCount; i += 1) {
                     b[i].onclick = function () {
                         let chosen = this.id;
                         toggleSubField('unset');
