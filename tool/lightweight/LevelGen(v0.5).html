@@ -651,7 +651,7 @@
                     suggestList.push(b);
                 }
                 else {
-                    suggestList(readTxtInput('listSuggest'));
+                    suggestList.push(a);
                 }
             }
             //too lazy to create the obj now to later
@@ -913,13 +913,6 @@
             return val;
         }
 
-        function toggleSubField(stats) {
-            var a = document.createElement("fieldset");
-            a.style.display = stats;
-            a.id = "childField";
-            myGroupBox.appendChild(a);
-        }
-		
 		function hideSubBox() {
 		    document.getElementById('mySubGroupBox').setAttribute('hidden',true);
 		}
