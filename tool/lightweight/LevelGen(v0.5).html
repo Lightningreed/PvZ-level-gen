@@ -671,6 +671,7 @@
                 createEventButton();
                 newLine();
                 addText("Wave: " + i);
+                newLine();
                 myGrid = {
                     'data': [
                         { 'name': "AdditionalPlantfood", "type": "number", 'displayTxt': 'Wave plantfood: ', 'min': '0', 'max': '' },
@@ -678,13 +679,20 @@
                     ]
                 }
                 createUI(10);
+                newLine();addText('Zombie: ');myGroupBox.appendChild(createInput('text','zombie'));
+                addText('  at row: ');myGroupBox.appendChild(createInput('text','rowW'));addText('  ');myGroupBox.appendChild(createButton('Add', handleZ));
+                newLine();myGroupBox.appendChild(createButton('Generate wave and events'));
             }
             myGroupBox.appendChild(createButton(waveButtons[0], handler)); addText('      ');
 
-            var handleWave = function () {
-
+            var handleZ = function () {
+                var objW = {};
+                var row = readIntInput('rowW');
+                var zombieW = readTxtInput('zombie');
+                objW.Type = validateWave(zombieW);
+                if (row != null && row != undefined) objW.Row = row;
+                zArr.push(objW);
             }
-
 
             handler = function () {
                 alert('Lets manage a wave props!');
@@ -695,12 +703,13 @@
             }
             myGroupBox.appendChild(createButton(waveButtons[2], handler));
             function createEventButton() {
-                newLine(); newLine();
-                waveEvent.forEach(function (a) { addText(' '); mySubGroupBox.appendChild(createButton(a, clickHandler, a, 'evButton')) });
-                showSubBox();
+                newLine(); newLine(); showSubBox();
+                waveEvent.forEach(function (a) {
+                    addText(' ');
+                    mySubGroupBox.appendChild(createButton(a, clickHandler, a, 'evButton'))
+                });
             }
             var clickHandler = function () {
-                showSubBox();
                 switch (this.id) {
                     case "Jam":
                         let arr = ['Rap', 'Punk', '8Bit', 'Metal', 'Ballad'];
@@ -768,7 +777,9 @@
 
         function clearSubInputArea() {
             while (mySubGroupBox.firstChild) {
-                mySubGroupBox.removeChild(mySubGroupBox.firstChild);
+            var x =   mySubGroupBox.lastChild.id;
+            if (x == 'SunDropper') {newSubLine();break;}
+            mySubGroupBox.removeChild(mySubGroupBox.lastChild);
             }
             mySubGroupBox.appendChild(document.createElement('br'))
         }
@@ -800,6 +811,7 @@
             }
             );
 
+
             var clickHandler = function () {
                 userInput = myReadData();
                 completeObjdata();
@@ -811,17 +823,17 @@
                 myGroupBox.appendChild(createButton('Submit', clickHandler));
             }
 
-
-            clickHandler = function () {
-                userInput = myReadData();
-                completeObjdata();
-                if (runCreateObj.run == true) {
-                    completeObjdata.createObj();
-                }
-            };
-            myGroupBox.appendChild(createButton('Submit and generate chosen object', clickHandler));
+            if (c == null) {
+                clickHandler = function () {
+                    userInput = myReadData();
+                    completeObjdata();
+                    if (runCreateObj.run == true) {
+                        completeObjdata.createObj();
+                    }
+                };
+                myGroupBox.appendChild(createButton('Submit and generate chosen object', clickHandler));
+            }
         }
-
         function createSubUI() {
             clearSubInputArea();
 
