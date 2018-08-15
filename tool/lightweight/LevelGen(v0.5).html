@@ -50,6 +50,7 @@
         var a;//field
         var moldConfig = [];
         var c; //param o' box
+        var zArr = [];
 
         //functions
         var completeObjdata;
@@ -664,7 +665,7 @@
         function handleWave() {
             var waveButtons = ['WaveManager', 'WaveManagerProps', 'Escalation'];
             var waveEvent = ['Jam', 'LowTide', 'GroundSpawn', 'Sandstorm', 'RaidingParty', 'GirdSpawn', 'SpiderRain', 'TideChange', 'FrostWind', 'Sandstorm', 'ParachuteRain', 'Portal', 'Dino', 'SunDropper'];
-            var waveMgr = [], zArr = [];
+            var waveMgr = [];
             var i = 1;
             clearInputArea();
             var handler = function () {
@@ -679,20 +680,11 @@
                     ]
                 }
                 createUI(10);
-                newLine();addText('Zombie: ');myGroupBox.appendChild(createInput('text','zombie'));
-                addText('  at row: ');myGroupBox.appendChild(createInput('text','rowW'));addText('  ');myGroupBox.appendChild(createButton('Add', handleZ));
-                newLine();myGroupBox.appendChild(createButton('Generate wave and events'));
+                askZ(); newLine();
+                myGroupBox.appendChild(createButton('Generate wave and events'));
             }
             myGroupBox.appendChild(createButton(waveButtons[0], handler)); addText('      ');
 
-            var handleZ = function () {
-                var objW = {};
-                var row = readIntInput('rowW');
-                var zombieW = readTxtInput('zombie');
-                objW.Type = validateWave(zombieW);
-                if (row != null && row != undefined) objW.Row = row;
-                zArr.push(objW);
-            }
 
             handler = function () {
                 alert('Lets manage a wave props!');
@@ -713,6 +705,7 @@
                 switch (this.id) {
                     case "Jam":
                         let arr = ['Rap', 'Punk', '8Bit', 'Metal', 'Ballad'];
+                        clearSubInputArea();
                         newSubLine();
                         addSubText('Music?');
                         newSubLine();
@@ -727,13 +720,43 @@
                                 { 'name': 'ColumnStart', 'id': 'colStartTide', 'displayTxt': 'Column start: ', 'type': 'number', 'min': '0', 'max': '9' },
                                 { 'name': 'TimeBeforeFullSpawn', 'id': 'timebFullSpawnTide', 'displayTxt': 'Time before full spawn: ', 'type': 'number', 'min': '0', 'max': '' },
                                 { 'name': 'TimeBetweenGroup', 'id': 'timebweenGrTide', 'displayTxt': 'Time between group: ', 'type': 'number', 'min': '0', 'max': '' },
-                                { 'name': 'WaveStartMessage', 'id': 'waveMessage', 'displayTxt': 'Wave start message', 'type': 'text' },
+                                { 'name': 'WaveStartMessage', 'id': 'waveMessage', 'displayTxt': 'Wave start message: ', 'type': 'text' },
                                 { 'name': 'ZombieCount', 'id': 'zCountTide', 'displayTxt': 'Zombie count: ', 'type': 'number', 'min': '0', 'max': '' },
                                 { 'name': 'ZombieType', 'id': 'zTypeTide', 'displayTxt': 'Zombie ambush type: ', 'type': 'text' }
                             ]
                         }
                         runCreateObj.toSubmit = false;
                         createSubUI();
+                        addSubEvButton();
+                        completeObjdata = function () {
+                            var lowAlias = ['Wave' + i + 'LowTideEvent'], lowObj = {};
+                            lowObj.aliases = lowAlias;
+                            lowObj.objclass = "BeachStageEventZombieSpawnerProps";
+                            lowObj.objdata = userInput;
+                            console.log(JSON.stringify(lowObj));
+                        }
+                        break;
+                    case "GroundSpawn":
+                        myGrid = {
+                            'data': [
+                                { 'name': 'ColumStart', 'id': 'GSColStart', 'displayTxt': 'Column start: ', 'type': 'number', 'min': '0', 'max': '9' },
+                                { 'name': 'ColumnEnd', 'id': 'GSColEnd', 'displayTxt': 'Coulumn end: ', 'type': 'number', 'min': '0', 'max': '9' }
+                            ]
+                        }
+                        runCreateObj.toSubmit = false;
+                        createSubUI();
+                        askSubZ();
+                        addSubEvButton();
+                        completeObjdata = function () {
+                            var groundAlias = ['Wave' + i + 'GroundSpawnEvent'], groundObj = {}, groundData = {}
+                            groundObj.aliases = groundAlias;
+                            groundObj.objclass = "SpawnZombiesFromGroundSpawnerProps";
+                            groundData.Zombies = zArr;
+                            groundObj.objdata = userInput;
+                            groundObj.objdata.Zombies = zArr;
+                            console.log(JSON.stringify(groundObj));
+                        }
+                        break;
                 };
             };
 
@@ -777,9 +800,9 @@
 
         function clearSubInputArea() {
             while (mySubGroupBox.firstChild) {
-            var x =   mySubGroupBox.lastChild.id;
-            if (x == 'SunDropper') {newSubLine();break;}
-            mySubGroupBox.removeChild(mySubGroupBox.lastChild);
+                var x = mySubGroupBox.lastChild.id;
+                if (x == 'SunDropper') { newSubLine(); break; }
+                mySubGroupBox.removeChild(mySubGroupBox.lastChild);
             }
             mySubGroupBox.appendChild(document.createElement('br'))
         }
@@ -867,15 +890,6 @@
                 mySubGroupBox.appendChild(createButton('Submit', clickHandler));
             }
 
-
-            clickHandler = function () {
-                userInput = myReadData();
-                completeObjdata();
-                if (runCreateObj.run == true) {
-                    completeObjdata.createObj();
-                }
-            };
-            mySubGroupBox.appendChild(createButton('Submit and generate chosen object', clickHandler));
         }
 
 
@@ -951,7 +965,45 @@
         function showSubBox() {
             document.getElementById('mySubGroupBox').removeAttribute('hidden');
         }
+        function askZ() {
+            var zArr = [];
+            newLine(); addText('Zombie: '); myGroupBox.appendChild(createInput('text', 'zombie'));
+            addText('  at row: '); myGroupBox.appendChild(createInput('text', 'rowW')); addText('  '); myGroupBox.appendChild(createButton('Add', handleZ));
+            var handleZ = function () {
+                var objW = {};
+                var row = readIntInput('rowW');
+                var zombieW = readTxtInput('zombie');
+                objW.Type = validateWave(zombieW);
+                if (row != null && row != undefined) {objW.Row = row};
+                zArr.push(objW);
+            }
+        }
 
+        function askSubZ() {
+            newSubLine(); addSubText('Zombie: '); mySubGroupBox.appendChild(createInput('text', 'zombie'));
+            addSubText('  at row: '); mySubGroupBox.appendChild(createInput('text', 'rowW')); addSubText('  '); mySubGroupBox.appendChild(createButton('Add', handleZ));
+            var handleZ = function () {
+                var objW = {};
+                var row = readIntInput('rowW');
+                var zombieW = readTxtInput('zombie');
+                objW.Type = validateWave(zombieW);
+                if (row != null && row != undefined) objW.Row = row;
+                zArr.push(objW);
+            }
+        }
+
+        function addSubEvButton() {
+            newSubLine();
+            clickHandler = function () {
+                userInput = myReadData();
+                completeObjdata();
+                if (runCreateObj.run == true) {
+                    completeObjdata.createObj();
+                }
+                zArr = [];
+            };
+            mySubGroupBox.appendChild(createButton('Add event', clickHandler));
+        }
     </script>
 </body>
 
