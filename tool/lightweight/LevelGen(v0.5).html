@@ -981,15 +981,18 @@
 
         function askSubZ() {
             newSubLine(); addSubText('Zombie: '); mySubGroupBox.appendChild(createInput('text', 'zombie'));
-            addSubText('  at row: '); mySubGroupBox.appendChild(createInput('text', 'rowW')); addSubText('  '); mySubGroupBox.appendChild(createButton('Add', handleZ));
-            var handleZ = function () {
+            
+			var handleZ = function () {
                 var objW = {};
                 var row = readIntInput('rowW');
                 var zombieW = readTxtInput('zombie');
                 objW.Type = validateWave(zombieW);
                 if (row != null && row != undefined) objW.Row = row;
                 zArr.push(objW);
-            }
+				alert(objW);
+            };
+			addSubText('  at row: '); mySubGroupBox.appendChild(createInput('text', 'rowW')); addSubText('  '); mySubGroupBox.appendChild(createButton('Add', handleZ));
+            
         }
 
         function addSubEvButton() {
