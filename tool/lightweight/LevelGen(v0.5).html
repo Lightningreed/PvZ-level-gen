@@ -958,6 +958,11 @@
             return val;
         }
 
+        function validateZombie(a) {
+            var val = "RTID("+ a + "@ZombieType)";
+            return val;
+        }
+
         function hideSubBox() {
             document.getElementById('mySubGroupBox').setAttribute('hidden', true);
         }
@@ -980,18 +985,18 @@
         }
 
         function askSubZ() {
-            newSubLine(); addSubText('Zombie: '); mySubGroupBox.appendChild(createInput('text', 'zombie'));
+            newSubLine(); addSubText('Zombie: '); mySubGroupBox.appendChild(createInput('text', 'zombieSub'));
              
 			var handleZ = function () {
                 var objW = {};
-                var row = readIntInput('rowW');
-                var zombieW = readTxtInput('zombie');
+                var row = readIntInput('rowWSub');
+                var zombieW = readTxtInput('zombieSub');
                 objW.Type = validateWave(zombieW);
-                if (row != null && row != undefined) objW.Row = row;
+                if (row != null && row != undefined) {objW.Row = row};
                 zArr.push(objW);
 				alert(objW);
             };
-			addSubText('  at row: '); mySubGroupBox.appendChild(createInput('text', 'rowW')); addSubText('  '); mySubGroupBox.appendChild(createButton('Add', handleZ));
+			addSubText('  at row: '); mySubGroupBox.appendChild(createInput('text', 'rowWSub')); addSubText('  '); mySubGroupBox.appendChild(createButton('Add', handleZ));
             
         }
 
