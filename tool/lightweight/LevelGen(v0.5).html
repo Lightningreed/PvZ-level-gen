@@ -831,6 +831,8 @@
                             tideChangeObj.objdata.TidalChange = userInput;
                         }
                         break;
+                        case "ParachuteRain": 
+                        
 
                 };
             };
@@ -1074,15 +1076,20 @@
 
         }
 
-        function nest(firstText, secondText, firstType, secondType, firstId, secondId, toNest, isFirstInt, isSecondInt, nestFirstProp, nestSecondProp) {
+        function nest(firstText, secondText, firstType, secondType, firstId, secondId, toNest, isFirstInt, isSecondInt, nestFirstProp, nestSecondProp, processFirstAns, processSecondAns) {
             newSubLine(); addSubText(firstText + " ");mySubGroupBox.appendChild(createInput(firstType, firstId));
             var nestArr = []
             var nester = function () {
             var obj = {};
             if (isFirstInt == true) {var firstAns = readIntInput(firstId)} else if (isSecondInt == false) {var firstAns = readTxtInput(firstId)};
-            if (isSecondInt == true) {var secondAns =  readIntInput(secondId)} else if (isSecondInt == false) {var secondAns = readTxtInput(secondId)};
-            if (toNest == true) {if (firstAns != undefined) {obj[nestFirstProp] = firstAns} if (secondAns != undefined){obj[nestSecondProp] = secondAns}};
+          if (secondType != undefined)  if (isSecondInt == true) {var secondAns =  readIntInput(secondId)} else if (isSecondInt == false) {var secondAns = readTxtInput(secondId)};
+            if (typeof processFirstAns == 'function') {firstAns = processFirstAns();}; if (typeof processSecondAns == 'function' && secondType != undefined) {secondAns = processSecondAns();}
+            if (toNest == true) {if (firstAns != undefined) {obj[nestFirstProp] = firstAns} if (secondAns != undefined){obj[nestSecondProp] = secondAns}
+            nestArr.push(obj);
             }
+            else {if (firstAns != undefined){nestArr.push(firstAns)} if (secondAns != undefined){nestArr.push(secondAns)}}};
+           if (secondType != null || secondType != undefined) addSubText(' ' + secondText + ' ');mySubGroupBox.appendChild(createInput(secondType, secondId));
+           mySubGroupBox.appendChild(createButton('Add', nester));
         }
 
         function addSubEvButton() {
