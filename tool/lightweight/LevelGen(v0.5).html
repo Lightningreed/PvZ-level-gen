@@ -664,7 +664,7 @@
 
         function handleWave() {
             var waveButtons = ['WaveManager', 'WaveManagerProps', 'Escalation'];
-            var waveEvent = ['Jam', 'LowTide', 'GroundSpawn', 'Sandstorm', 'RaidingParty', 'GirdSpawn', 'SpiderRain', 'TideChange', 'FrostWind', 'Sandstorm', 'ParachuteRain', 'Portal', 'Dino', 'SunDropper'];
+            var waveEvent = ['Jam', 'LowTide', 'GroundSpawn', '(Sand/Snow)storm', 'RaidingParty', 'GirdSpawn', 'SpawnFromGird', 'SpiderRain/BotSwarm', 'TideChange', 'FrostWind', 'ParachuteRain', 'Portal', 'Dino', 'SunDropper'];
             var waveMgr = [];
             var i = 1;
             clearInputArea();
@@ -757,6 +757,81 @@
                             console.log(JSON.stringify(groundObj));
                         }
                         break;
+                    case "(Sand/Snow)storm":
+                        myGrid = {
+                            'data': [
+                                { 'name': 'ColumnEnd', 'id': 'colEndStorm', 'displayTxt': 'Column end: ', 'type': 'number', 'min': '0', 'max': '9' },
+                                { 'name': 'ColumnStart', 'id': 'colStartStorm', 'displayTxt': 'Column start: ', 'type': 'number', 'min': '0', 'max': '9' },
+                                { 'name': 'TimeBetweenGroup', 'id': 'timebweenGrStorm', 'displayTxt': 'Time between group: ', 'type': 'number', 'min': '0', 'max': '' },
+                                { 'name': 'Waves', 'id': 'stormWaves', 'displayTxt': 'Waves: ', 'type': 'text' },
+                                { 'name': 'Type', 'id': 'stormType', 'displayTxt': 'Storm type: (sandstorm, snowstorm) ', 'type': 'text' },
+                            ]
+                        }
+                        createSubUI();
+                        askSubZ();
+                        addSubEvButton();
+                        completeObjdata = function () {
+                            var stormAlias = ['Wave' + i + 'StormEvent'], stormObj = {};
+                            stormObj.aliases = stormAlias;
+                            stormObj.objclass = "StormZombieSpawnerProps";
+                            stormObj.objdata = userInput;
+                            stormObj.objdata.Zombies = zArr;
+                        }
+                        break;
+                    case "RaidingParty":
+                        myGrid = {
+                            'data': [
+                                { 'name': 'SwashbucklerCount', 'id': 'bucklerCount', 'displayTxt': 'Swashbuckler count: ', 'type': 'number', 'min': '0', 'max': '' },
+                                { 'name': 'GroupSize', 'id': 'raidGrSize', 'displayTxt': 'Group size: ', 'type': 'number', 'min': '0', 'max': '9' },
+                                { 'name': 'TimeBetweenGroup', 'id': 'timebweenGrTide', 'displayTxt': 'Time between group: ', 'type': 'number', 'min': '0', 'max': '' }
+                            ]
+                        }
+                        createSubUI();
+                        addSubEvButton();
+                        completeObjdata = function () {
+                            var raidAlias = ['Wave' + i + 'RaidingEvent'], raidObj = {};
+                            raidObj.aliases = raidAlias;
+                            raidObj.objclass = 'RaidingPartyZombieSpawnerProps';
+                            raidObj.objdata = userInput;
+                        }
+                    case 'SpiderRain/BotSwarm':
+                        myGrid = {
+                            'data': [
+                                { 'name': 'ColumnEnd', 'id': 'colEndSwarm', 'displayTxt': 'Column end: ', 'type': 'number', 'min': '0', 'max': '9' },
+                                { 'name': 'ColumnStart', 'id': 'colStartSwarm', 'displayTxt': 'Column start: ', 'type': 'number', 'min': '0', 'max': '9' },
+                                { 'name': 'TimeBetweenGroup', 'id': 'timebweenGrSwarm', 'displayTxt': 'Time between group: ', 'type': 'number', 'min': '0', 'max': '' },
+                                { 'name': 'TimeBeforeFullSpawn', 'id': 'timefullSpawnSwarm', 'displayTxt': 'Time before full spawn', 'type': 'number', 'min': '0', 'max': '' },
+                                { 'name': 'GroupSize', 'id': 'raidGrSize', 'displayTxt': 'Group size: ', 'type': 'number', 'min': '0', 'max': '9' },
+                                { 'name': 'SpiderCount', 'id': 'spiderCount', 'displayTxt': 'Ambush count: ', 'type': 'number', 'min': '0', 'max': '9' },
+                                { 'name': 'SpiderName', 'id': 'spiderName', 'displayTxt': 'Ambush name: ', 'type': 'text' },
+                                { 'name': 'WaveStartMessage', 'id': 'waveMessSwarm', 'displayTxt': 'Wave message: ', 'type': 'text' },
+                                { 'name': 'ZombieFallTime', 'id': 'zFallTimeSwarm', 'displayTxt': 'Zombie fall time: ', 'type': 'number', 'min': '0', 'max': '9' }
+                            ]
+                        }
+                        createSubUI();
+                        addSubEvButton();
+                        completeObjdata = function () {
+                            var swarmAlias = ['Wave' + i + 'SwarmEvent'], swarmObj = {};
+                            swarmObj.aliases = swarmAlias;
+                            swarmObj.objclass = "SpiderRainZombieSpawnerProps";
+                            swarmObj.objdata = userInput;
+                        }
+                        break;
+                        case 'TideChange':
+                        myGrid = {
+                            'data': [
+                                {'name':'ChangeAmount','id':'changeAmount','type':'number','min':'0','max':'','displayTxt':'Change amount'},
+                                {'name':'ChangeType','id':'changeType','type':'text','displayTxt':'Change type: '},
+                            ]
+                        }
+                        completeObjdata = function () {
+                            var tideChangeAlias = ['Wave' + i + 'TideChangeEvent'], tideChangeObj = {};
+                            tideChangeObj.aliases = tideChangeAlias;
+                            tideChangeObj.objclass = "TidalChangeWaveActionProps";
+                            tideChangeObj.objdata.TidalChange = userInput;
+                        }
+                        break;
+                        
                 };
             };
 
@@ -959,7 +1034,7 @@
         }
 
         function validateZombie(a) {
-            var val = "RTID("+ a + "@ZombieType)";
+            var val = "RTID(" + a + "@ZombieType)";
             return val;
         }
 
@@ -979,25 +1054,24 @@
                 var row = readIntInput('rowW');
                 var zombieW = readTxtInput('zombie');
                 objW.Type = validateWave(zombieW);
-                if (row != null && row != undefined) {objW.Row = row};
+                if (row != null && row != undefined) { objW.Row = row };
                 zArr.push(objW);
             }
         }
 
         function askSubZ() {
             newSubLine(); addSubText('Zombie: '); mySubGroupBox.appendChild(createInput('text', 'zombieSub'));
-             
-			var handleZ = function () {
+
+            var handleZ = function () {
                 var objW = {};
                 var row = readIntInput('rowWSub');
                 var zombieW = readTxtInput('zombieSub');
-                objW.Type = validateWave(zombieW);
-                if (row != null && row != undefined) {objW.Row = row};
+                objW.Type = validateZombie(zombieW);
+                if (row != null && row != undefined) { objW.Row = row };
                 zArr.push(objW);
-				alert(objW);
             };
-			addSubText('  at row: '); mySubGroupBox.appendChild(createInput('text', 'rowWSub')); addSubText('  '); mySubGroupBox.appendChild(createButton('Add', handleZ));
-            
+            addSubText('  at row: '); mySubGroupBox.appendChild(createInput('text', 'rowWSub')); addSubText('  '); mySubGroupBox.appendChild(createButton('Add', handleZ));
+
         }
 
         function addSubEvButton() {
