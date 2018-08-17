@@ -664,7 +664,7 @@
 
         function handleWave() {
             var waveButtons = ['WaveManager', 'WaveManagerProps', 'Escalation'];
-            var waveEvent = ['Jam', 'LowTide', 'GroundSpawn', '(Sand/Snow)storm', 'RaidingParty', 'GirdSpawn', 'SpawnFromGird', 'SpiderRain/BotSwarm', 'TideChange', 'FrostWind', 'ParachuteRain', 'Portal', 'Dino', 'SunDropper'];
+            var waveEvent = ['Jam', 'LowTide', 'GroundSpawn', '(Sand/Snow)storm', 'RaidingParty', 'GirdSpawn', 'SpawnFromGird', 'BotSwarm', 'TideChange', 'FrostWind', 'ParachuteRain', 'Portal', 'Dino', 'SunDropper'];
             var waveMgr = [];
             var i = 1;
             clearInputArea();
@@ -831,7 +831,7 @@
                             tideChangeObj.objdata.TidalChange = userInput;
                         }
                         break;
-                        
+
                 };
             };
 
@@ -1072,6 +1072,17 @@
             };
             addSubText('  at row: '); mySubGroupBox.appendChild(createInput('text', 'rowWSub')); addSubText('  '); mySubGroupBox.appendChild(createButton('Add', handleZ));
 
+        }
+
+        function nest(firstText, secondText, firstType, secondType, firstId, secondId, toNest, isFirstInt, isSecondInt, nestFirstProp, nestSecondProp) {
+            newSubLine(); addSubText(firstText + " ");mySubGroupBox.appendChild(createInput(firstType, firstId));
+            var nestArr = []
+            var nester = function () {
+            var obj = {};
+            if (isFirstInt == true) {var firstAns = readIntInput(firstId)} else if (isSecondInt == false) {var firstAns = readTxtInput(firstId)};
+            if (isSecondInt == true) {var secondAns =  readIntInput(secondId)} else if (isSecondInt == false) {var secondAns = readTxtInput(secondId)};
+            if (toNest == true) {if (firstAns != undefined) {obj[nestFirstProp] = firstAns} if (secondAns != undefined){obj[nestSecondProp] = secondAns}};
+            }
         }
 
         function addSubEvButton() {
