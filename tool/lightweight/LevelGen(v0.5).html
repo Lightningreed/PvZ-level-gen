@@ -54,7 +54,8 @@
 
         //this one get a global flag for nest()
         var fireNest;
-        var nestArr = [];
+        var nestArr1 = [];
+		var nestArr2 = [];
 
         //functions
         var completeObjdata;
@@ -846,16 +847,16 @@
                             ]
                         }
                         createSubUI();
-                        let a = nest('Type:', 'Count:', 'text', 'number', 'gridSpawnType', 'gridSpawnCount', true, false, true, 'Type', 'Count', 'manageGrid', undefined);newSubLine();
-                        let b = nest('mX:','mY','number','number','mX','mY',true,true,true,'mX','mY',undefined,undefined);
+                        let a = nest('Type:', 'Count:', 'text', 'number', 'gridSpawnType', 'gridSpawnCount', true, false, true, 'Type', 'Count', 'manageGrid', undefined, nestArr1);newSubLine();
+                        let b = nest('mX:','mY','number','number','mX','mY',true,true,true,'mX','mY',undefined,undefined, nestArr2);
                         addSubEvButton();
                         var gridSAlias = ['Wave' + i + "GridSpawnEvent"], gridSObj = {}, spawnPosPool = []
                         completeObjdata = function () {
                             gridSObj.aliases = gridSAlias;
                             gridSObj.objclass = 'SpawnZombiesFromGridItemSpawnerProps';
                             gridSObj.objdata = userInput;
-                            gridSObj.objdata.GraveStonePool = a;
-                            gridSObj.objdata.SpawnPostionPool = spawnPosPool.push(b);
+                            gridSObj.objdata.GraveStonePool = nestArr1;
+                            gridSObj.objdata.SpawnPostionPool = spawnPosPool.push(nestArr2);
                             console.log(JSON.stringify(gridSObj))
                         }
                     break;
@@ -1114,7 +1115,7 @@
 
         }
 
-        function nest(firstText = '', secondText ='', firstType = '', secondType = '', firstId = '', secondId = '', toNest = boolean, isFirstInt = boolean, isSecondInt = boolean, nestFirstProp = '', nestSecondProp = '', processFirstAns, processSecondAns) {
+        function nest(firstText = '', secondText ='', firstType = '', secondType = '', firstId = '', secondId = '', toNest = boolean, isFirstInt = boolean, isSecondInt = boolean, nestFirstProp = '', nestSecondProp = '', processFirstAns, processSecondAns,nestArr) {
             newSubLine(); addSubText(firstText + " "); mySubGroupBox.appendChild(createInput(firstType, firstId));
             var nester = function () {
                 var obj = {};
@@ -1129,9 +1130,11 @@
                     if (firstAns != undefined) { nestArr.push(firstAns) }// if (secondAns != undefined){nestArr.push(secondAns)}
                 }
                 document.getElementById('evSubButton').onclick = function () {
-                  let a = nestArr;
-                  nestArr = [];
-                  return a;
+				  completeObjdata();
+				  alert('done');
+                  //let a = nestArr;
+                  //nestArr = [];
+                  //return a;
                 }
             };
             if (secondType != null || secondType != undefined) addSubText(' ' + secondText + ' '); mySubGroupBox.appendChild(createInput(secondType, secondId));
