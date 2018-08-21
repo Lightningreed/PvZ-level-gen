@@ -847,18 +847,23 @@
                             ]
                         }
                         createSubUI();
-                        let a = nest('Type:', 'Count:', 'text', 'number', 'gridSpawnType', 'gridSpawnCount', true, false, true, 'Type', 'Count', 'manageGrid', undefined, nestArr1);newSubLine();
-                        let b = nest('mX:','mY','number','number','mX','mY',true,true,true,'mX','mY',undefined,undefined, nestArr2);
+                        
+						nest('Type:', 'Count:', 'text', 'number', 'gridSpawnType', 'gridSpawnCount', true, false, true, 'Type', 'Count', manageGrid, undefined, nestArr1);
+						newSubLine();
+                        
+						nest('mX:','mY','number','number','mX','mY',true,true,true,'mX','mY',undefined,undefined, nestArr2);
                         addSubEvButton();
-                        var gridSAlias = ['Wave' + i + "GridSpawnEvent"], gridSObj = {}, spawnPosPool = []
+                        
+						var gridSAlias = ['Wave' + i + "GridSpawnEvent"], gridSObj = {};
                         completeObjdata = function () {
                             gridSObj.aliases = gridSAlias;
                             gridSObj.objclass = 'SpawnZombiesFromGridItemSpawnerProps';
                             gridSObj.objdata = userInput;
                             gridSObj.objdata.GraveStonePool = nestArr1;
-                            gridSObj.objdata.SpawnPostionPool = spawnPosPool.push(nestArr2);
+                            gridSObj.objdata.SpawnPostionPool = nestArr2;
                             console.log(JSON.stringify(gridSObj))
                         }
+						document.getElementById('evSubButton').onclick = completeObjdata;
                     break;
                     case 'SunDropper':
                     myGrid = {
@@ -1115,27 +1120,51 @@
 
         }
 
-        function nest(firstText = '', secondText ='', firstType = '', secondType = '', firstId = '', secondId = '', toNest = boolean, isFirstInt = boolean, isSecondInt = boolean, nestFirstProp = '', nestSecondProp = '', processFirstAns, processSecondAns,nestArr) {
-            newSubLine(); addSubText(firstText + " "); mySubGroupBox.appendChild(createInput(firstType, firstId));
-            var nester = function () {
+        function nest(firstText = '', secondText ='', firstType = '', secondType = '', firstId = '', secondId = '', 
+					toNest = boolean, isFirstInt = boolean, isSecondInt = boolean, 
+					nestFirstProp = '', nestSecondProp = '', processFirstAns, processSecondAns,nestArr) {
+			
+			newSubLine(); addSubText(firstText + " "); mySubGroupBox.appendChild(createInput(firstType, firstId));
+			//stop writing Spaghetti code :O
+			
+			var nester = function () {
                 var obj = {};
-                if (isFirstInt == true) { var firstAns = readIntInput(firstId) } else if (isSecondInt == false) { var firstAns = readTxtInput(firstId) };
-                if (secondType != undefined) { if (isSecondInt == true) { var secondAns = readIntInput(secondId) } else if (isSecondInt == false) { var secondAns = readTxtInput(secondId) } };
-                if (typeof processFirstAns == 'function') { firstAns = processFirstAns(); }; if (typeof processSecondAns == 'function' && secondType != undefined) { secondAns = processSecondAns(); }
+				var firstAns, secondAns;
+				
+                if (isFirstInt == true) { 
+					firstAns = readIntInput(firstId); 
+				} else { 
+					firstAns = readTxtInput(firstId);
+				}
+                
+				if (isSecondInt == true) { 
+					secondAns = readIntInput(secondId) 
+				} else { 
+					secondAns = readTxtInput(secondId) 
+				} 
+				
+				
+                if (typeof processFirstAns == 'function') { 
+					firstAns = processFirstAns(firstAns); 
+				}
+				if (typeof processSecondAns == 'function' && secondType != undefined) { 
+					secondAns = processSecondAns(secondAns); 
+				}
+				
                 if (toNest == true) {
-                    if (firstAns != undefined) { obj[nestFirstProp] = firstAns } if (secondAns != undefined) { obj[nestSecondProp] = secondAns }
+                    if (firstAns != undefined) { 
+						obj[nestFirstProp] = firstAns 
+					} 
+					if (secondAns != undefined) { 
+						obj[nestSecondProp] = secondAns 
+					}
                     nestArr.push(obj);
+                } else {
+                    if (firstAns != undefined) { 
+						nestArr.push(firstAns);
+					}
                 }
-                else {
-                    if (firstAns != undefined) { nestArr.push(firstAns) }// if (secondAns != undefined){nestArr.push(secondAns)}
-                }
-                document.getElementById('evSubButton').onclick = function () {
-				  completeObjdata();
-				  alert('done');
-                  //let a = nestArr;
-                  //nestArr = [];
-                  //return a;
-                }
+				
             };
             if (secondType != null || secondType != undefined) addSubText(' ' + secondText + ' '); mySubGroupBox.appendChild(createInput(secondType, secondId));
             mySubGroupBox.appendChild(createButton('Add', nester));
