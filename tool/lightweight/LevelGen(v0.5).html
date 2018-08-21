@@ -52,6 +52,10 @@
         var c; //param o' box
         var zArr = [];
 
+        //this one get a global flag for nest()
+        var fireNest;
+        var nestArr = [];
+
         //functions
         var completeObjdata;
 
@@ -664,7 +668,7 @@
 
         function handleWave() {
             var waveButtons = ['WaveManager', 'WaveManagerProps', 'Escalation'];
-            var waveEvent = ['Jam', 'LowTide', 'GroundSpawn', '(Sand/Snow)storm', 'RaidingParty', 'GirdSpawn', 'SpawnFromGird', 'BotSwarm', 'TideChange', 'FrostWind', 'ParachuteRain', 'Portal', 'Dino', 'SunDropper'];
+            var waveEvent = ['Jam', 'LowTide', 'GroundSpawn', '(Sand/Snow)storm', 'RaidingParty', 'GridSpawn', 'SpawnFromGrid', 'BotSwarm', 'TideChange', 'FrostWind', 'ParachuteRain', 'Portal', 'Dino', 'SunDropper'];
             var waveMgr = [];
             var i = 1;
             clearInputArea();
@@ -794,7 +798,7 @@
                             raidObj.objclass = 'RaidingPartyZombieSpawnerProps';
                             raidObj.objdata = userInput;
                         }
-                    case 'SpiderRain/BotSwarm':
+                    case 'BotSwarm':
                         myGrid = {
                             'data': [
                                 { 'name': 'ColumnEnd', 'id': 'colEndSwarm', 'displayTxt': 'Column end: ', 'type': 'number', 'min': '0', 'max': '9' },
@@ -817,13 +821,15 @@
                             swarmObj.objdata = userInput;
                         }
                         break;
-                        case 'TideChange':
+                    case 'TideChange':
                         myGrid = {
                             'data': [
-                                {'name':'ChangeAmount','id':'changeAmount','type':'number','min':'0','max':'','displayTxt':'Change amount'},
-                                {'name':'ChangeType','id':'changeType','type':'text','displayTxt':'Change type: '},
+                                { 'name': 'ChangeAmount', 'id': 'changeAmount', 'type': 'number', 'min': '0', 'max': '', 'displayTxt': 'Change amount' },
+                                { 'name': 'ChangeType', 'id': 'changeType', 'type': 'text', 'displayTxt': 'Change type: ' },
                             ]
                         }
+                        createSubUI();
+                        addSubEvButton();
                         completeObjdata = function () {
                             var tideChangeAlias = ['Wave' + i + 'TideChangeEvent'], tideChangeObj = {};
                             tideChangeObj.aliases = tideChangeAlias;
@@ -831,9 +837,36 @@
                             tideChangeObj.objdata.TidalChange = userInput;
                         }
                         break;
-                        case "ParachuteRain": 
-                        
-
+                    case 'GridSpawn':
+                        newSubLine();
+                        myGrid = {
+                            'data':[
+                                {'name':'SpawnEffectAnimID','displayTxt':'Spawn effect: ','id':'spawnEffGS','type':'text'},
+                                {'name':'SpawnSoundID','displayTxt':'Spawn sound: ','id':'spawnSoundGS','type':'text'}
+                            ]
+                        }
+                        createSubUI();
+                        let a = nest('Type:', 'Count:', 'text', 'number', 'gridSpawnType', 'gridSpawnCount', true, false, true, 'Type', 'Count', 'manageGrid', undefined);newSubLine();
+                        let b = nest('mX:','mY','number','number','mX','mY',true,true,true,'mX','mY',undefined,undefined);
+                        addSubEvButton();
+                        var gridSAlias = ['Wave' + i + "GridSpawnEvent"], gridSObj = {}, spawnPosPool = []
+                        completeObjdata = function () {
+                            gridSObj.aliases = gridSAlias;
+                            gridSObj.objclass = 'SpawnZombiesFromGridItemSpawnerProps';
+                            gridSObj.objdata = userInput;
+                            gridSObj.objdata.GraveStonePool = a;
+                            gridSObj.objdata.SpawnPostionPool = spawnPosPool.push(b);
+                            console.log(JSON.stringify(gridSObj))
+                        }
+                    break;
+                    case 'SunDropper':
+                    myGrid = {
+                        'data':[
+                            {'name':'SunAmountToDrop','displayTxt':'Sun amount to drop: ','id':'sunDropper','type':'number','min':'0','max':''}
+                        ]
+                    }
+                    createSubUI();
+                    addSubEvButton();
                 };
             };
 
@@ -1040,6 +1073,11 @@
             return val;
         }
 
+        function manageGrid(a) {
+            var val = "RTID(" + a + "GridItemType)";
+            return val;
+        }
+
         function hideSubBox() {
             document.getElementById('mySubGroupBox').setAttribute('hidden', true);
         }
@@ -1076,23 +1114,41 @@
 
         }
 
-        function nest(firstText, secondText, firstType, secondType, firstId, secondId, toNest, isFirstInt, isSecondInt, nestFirstProp, nestSecondProp, processFirstAns, processSecondAns) {
-            newSubLine(); addSubText(firstText + " ");mySubGroupBox.appendChild(createInput(firstType, firstId));
-            var nestArr = []
+        function nest(firstText = '', secondText ='', firstType = '', secondType = '', firstId = '', secondId = '', toNest = boolean, isFirstInt = boolean, isSecondInt = boolean, nestFirstProp = '', nestSecondProp = '', processFirstAns, processSecondAns) {
+            newSubLine(); addSubText(firstText + " "); mySubGroupBox.appendChild(createInput(firstType, firstId));
             var nester = function () {
-            var obj = {};
-            if (isFirstInt == true) {var firstAns = readIntInput(firstId)} else if (isSecondInt == false) {var firstAns = readTxtInput(firstId)};
-          if (secondType != undefined)  if (isSecondInt == true) {var secondAns =  readIntInput(secondId)} else if (isSecondInt == false) {var secondAns = readTxtInput(secondId)};
-            if (typeof processFirstAns == 'function') {firstAns = processFirstAns();}; if (typeof processSecondAns == 'function' && secondType != undefined) {secondAns = processSecondAns();}
-            if (toNest == true) {if (firstAns != undefined) {obj[nestFirstProp] = firstAns} if (secondAns != undefined){obj[nestSecondProp] = secondAns}
-            nestArr.push(obj);
-            }
-            else {if (firstAns != undefined){nestArr.push(firstAns)} if (secondAns != undefined){nestArr.push(secondAns)}}};
-           if (secondType != null || secondType != undefined) addSubText(' ' + secondText + ' ');mySubGroupBox.appendChild(createInput(secondType, secondId));
-           mySubGroupBox.appendChild(createButton('Add', nester));
+                var obj = {};
+                if (isFirstInt == true) { var firstAns = readIntInput(firstId) } else if (isSecondInt == false) { var firstAns = readTxtInput(firstId) };
+                if (secondType != undefined) { if (isSecondInt == true) { var secondAns = readIntInput(secondId) } else if (isSecondInt == false) { var secondAns = readTxtInput(secondId) } };
+                if (typeof processFirstAns == 'function') { firstAns = processFirstAns(); }; if (typeof processSecondAns == 'function' && secondType != undefined) { secondAns = processSecondAns(); }
+                if (toNest == true) {
+                    if (firstAns != undefined) { obj[nestFirstProp] = firstAns } if (secondAns != undefined) { obj[nestSecondProp] = secondAns }
+                    nestArr.push(obj);
+                }
+                else {
+                    if (firstAns != undefined) { nestArr.push(firstAns) }// if (secondAns != undefined){nestArr.push(secondAns)}
+                }
+                document.getElementById('evSubButton').onclick = function () {
+                  let a = nestArr;
+                  nestArr = [];
+                  return a;
+                }
+            };
+            if (secondType != null || secondType != undefined) addSubText(' ' + secondText + ' '); mySubGroupBox.appendChild(createInput(secondType, secondId));
+            mySubGroupBox.appendChild(createButton('Add', nester));
         }
 
-        function addSubEvButton() {
+        /* Usage:
+        This is the form to create <text> <input> (.<text> <input>.) <add button> in a single line.
+        (..) is optional.
+        To use: Assign a variable to a function: `var a = nest();`
+        Text = <text>
+        Type = Input type
+        Id = Input id
+        
+         */
+
+        function addSubEvButton(a) {
             newSubLine();
             clickHandler = function () {
                 userInput = myReadData();
@@ -1102,7 +1158,7 @@
                 }
                 zArr = [];
             };
-            mySubGroupBox.appendChild(createButton('Add event', clickHandler));
+            mySubGroupBox.appendChild(createButton('Add event', clickHandler, 'evSubButton'));
         }
     </script>
 </body>
