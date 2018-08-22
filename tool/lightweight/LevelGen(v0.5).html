@@ -674,6 +674,8 @@
             var i = 1;
             clearInputArea();
             var handler = function () {
+			    clearInputArea(true);
+			    clearSubInputArea(false);
                 createEventButton();
                 newLine();
                 addText("Wave: " + i);
@@ -692,13 +694,17 @@
 
 
             handler = function () {
+			    clearInputArea(true);
+			    clearSubInputArea(false);
                 alert('Lets manage a wave props!');
             }
             myGroupBox.appendChild(createButton(waveButtons[1], handler)); addText('      ');
             handler = function () {
+			    clearInputArea(true);
+			    clearSubInputArea(false);
                 alert('Don\'t know what is Escalation. :(');
             }
-            myGroupBox.appendChild(createButton(waveButtons[2], handler));
+            myGroupBox.appendChild(createButton(waveButtons[2], handler,waveButtons[2]));
             function createEventButton() {
                 newLine(); newLine(); showSubBox();
                 waveEvent.forEach(function (a) {
@@ -907,17 +913,21 @@
 
         //utilities
         //--------------------------------------------------------------------------------
-        function clearInputArea() {
+        function clearInputArea(preserveButtons=false) {
             while (myGroupBox.firstChild) {
-                myGroupBox.removeChild(myGroupBox.firstChild);
+			    if(myGroupBox.lastChild) {
+					var x = myGroupBox.lastChild.id;
+					if (x == 'Escalation' && preserveButtons) { newSubLine(); break; }
+				}
+                myGroupBox.removeChild(myGroupBox.lastChild);
             }
             myGroupBox.appendChild(document.createElement('br'))
         }
 
-        function clearSubInputArea() {
+        function clearSubInputArea(preserveButtons=true) {
             while (mySubGroupBox.firstChild) {
                 var x = mySubGroupBox.lastChild.id;
-                if (x == 'SunDropper') { newSubLine(); break; }
+                if (x == 'SunDropper' && preserveButtons) { newSubLine(); break; }
                 mySubGroupBox.removeChild(mySubGroupBox.lastChild);
             }
             mySubGroupBox.appendChild(document.createElement('br'))
