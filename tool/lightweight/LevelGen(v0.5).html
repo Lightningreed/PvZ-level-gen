@@ -55,7 +55,10 @@
         //this one get a global flag for nest()
         var fireNest;
         var nestArr1 = [];
-		var nestArr2 = [];
+        var nestArr2 = [];
+        var spawnGridNestArr = [];
+        var zGridNestArr = [];
+        var frostWindArr = [];
 
         //functions
         var completeObjdata;
@@ -674,8 +677,8 @@
             var i = 1;
             clearInputArea();
             var handler = function () {
-			    clearInputArea(true);
-			    clearSubInputArea(false);
+                clearInputArea(true);
+                clearSubInputArea(false);
                 createEventButton();
                 newLine();
                 addText("Wave: " + i);
@@ -694,17 +697,17 @@
 
 
             handler = function () {
-			    clearInputArea(true);
-			    clearSubInputArea(false);
+                clearInputArea(true);
+                clearSubInputArea(false);
                 alert('Lets manage a wave props!');
             }
             myGroupBox.appendChild(createButton(waveButtons[1], handler)); addText('      ');
             handler = function () {
-			    clearInputArea(true);
-			    clearSubInputArea(false);
+                clearInputArea(true);
+                clearSubInputArea(false);
                 alert('Don\'t know what is Escalation. :(');
             }
-            myGroupBox.appendChild(createButton(waveButtons[2], handler,waveButtons[2]));
+            myGroupBox.appendChild(createButton(waveButtons[2], handler, waveButtons[2]));
             function createEventButton() {
                 newLine(); newLine(); showSubBox();
                 waveEvent.forEach(function (a) {
@@ -723,6 +726,8 @@
                         arr.forEach(function (songName) {
                             mySubGroupBox.appendChild(createButton(songName, handleSong, songName));
                         });
+                        function handleSong() {
+                        }
                         break;
                     case "LowTide":
                         myGrid = {
@@ -847,20 +852,20 @@
                     case 'GridSpawn':
                         newSubLine();
                         myGrid = {
-                            'data':[
-                                {'name':'SpawnEffectAnimID','displayTxt':'Spawn effect: ','id':'spawnEffGS','type':'text'},
-                                {'name':'SpawnSoundID','displayTxt':'Spawn sound: ','id':'spawnSoundGS','type':'text'}
+                            'data': [
+                                { 'name': 'SpawnEffectAnimID', 'displayTxt': 'Spawn effect: ', 'id': 'spawnEffGS', 'type': 'text' },
+                                { 'name': 'SpawnSoundID', 'displayTxt': 'Spawn sound: ', 'id': 'spawnSoundGS', 'type': 'text' }
                             ]
                         }
                         createSubUI();
-                        
-						nest('Type:', 'Count:', 'text', 'number', 'gridSpawnType', 'gridSpawnCount', true, false, true, 'Type', 'Count', manageGrid, undefined, nestArr1);
-						newSubLine();
-                        
-						nest('mX:','mY','number','number','mX','mY',true,true,true,'mX','mY',undefined,undefined, nestArr2);
+
+                        nest('Type:', 'Count:', 'text', 'number', 'gridSpawnType', 'gridSpawnCount', true, false, true, 'Type', 'Count', manageGrid, undefined, nestArr1);
+                        newSubLine();
+
+                        nest('mX:', 'mY', 'number', 'number', 'mX', 'mY', true, true, true, 'mX', 'mY', undefined, undefined, nestArr2);
                         addSubEvButton();
-                        
-						var gridSAlias = ['Wave' + i + "GridSpawnEvent"], gridSObj = {};
+
+                        var gridSAlias = ['Wave' + i + "GridSpawnEvent"], gridSObj = {};
                         completeObjdata = function () {
                             gridSObj.aliases = gridSAlias;
                             gridSObj.objclass = 'SpawnZombiesFromGridItemSpawnerProps';
@@ -869,23 +874,81 @@
                             gridSObj.objdata.SpawnPostionPool = nestArr2;
                             console.log(JSON.stringify(gridSObj))
                         }
-						document.getElementById('evSubButton').onclick = completeObjdata;
-                    break;
+                        break;
                     case 'SunDropper':
-                    myGrid = {
-                        'data':[
-                            {'name':'SunAmountToDrop','displayTxt':'Sun amount to drop: ','id':'sunDropper','type':'number','min':'0','max':''}
-                        ]
-                    }
-                    createSubUI();
-                    addSubEvButton();
-                };
+                        myGrid = {
+                            'data': [
+                                { 'name': 'SunAmountToDrop', 'displayTxt': 'Sun amount to drop: ', 'id': 'sunDropper', 'type': 'number', 'min': '0', 'max': '' }
+                            ]
+                        }
+                        createSubUI();
+                        addSubEvButton();
+                        var dropperAlias = ['Wave' + i + 'SunDropperEvent'], dropperObj = {};
+                        completeObjdata = function () {
+                            dropperObj.aliases = dropperAlias;
+                            dropperObj.objclass = "SunDropperWaveActionProps";
+                            dropperObj.objdata = userInput;
+                        }
+                        break;
+                    case 'SpawnFromGrid':
+                        myGrid = {
+                            'data': [
+                                { 'name': 'AdditionalPlantfood', 'displayTxt': 'Wave plantfood amount: ', 'id': 'addPFSpawnFromGrid', 'type': 'number', 'min': '0', 'max': '' }
+                            ]
+                        }
+                        createSubUI();
+
+                        nest('Grid type to spawn from: ', undefined, 'text', undefined, 'gridSpawnType', undefined, false, false, undefined, undefined,
+                            undefined, manageGrid, undefined, spawnGridNestArr)
+                        newSubLine();
+
+                        nest('Zombie type:', undefined, 'text', undefined, 'zTypeSpawnGrid', undefined, true, false, undefined,
+                            'Type', undefined, validateZombie, undefined, zGridNestArr)
+
+                        newSubLine(); addSubEvButton();
+                        var spawnGridAlias = ['Wave' + i + 'SpawnFromGridEvent'], spawnGridObj = {};
+                        completeObjdata = function () {
+                            spawnGridObj.aliases = spawnGridAlias;
+                            spawnGridObj.objclass = "SpawnZombiesFromGridItemSpawnerProps";
+                            spawnGridObj.objdata = userInput;
+                            spawnGridObj.objdata.GridTypes = spawnGridNestArr;
+                            spawnGridObj.objdata.Zombies = zGridNestArr;
+                            console.log(JSON.stringify(spawnGridObj))
+                        };
+                        break;
+                        case 'Dino':
+                        myGrid = {
+                            'data': [
+                                {'name':'DinoRow','id':'dinoRow','type':'number','displayTxt':'Dino row: ','min':'0','max':'4'},
+                                {'name':'DinoType','id':'dinoType','type':'text','displayTxt':'Dino type: ',},
+                                {'name':'DinoWaveDuration','id':'dinoDuration','type':'number','min':'0','max':'','displayTxt':'Duration: '}
+                            ]
+                        }
+                        createSubUI();
+                        addSubEvButton();
+                        var dinoObj = {}, dinoAliases = ['Wave'+i+'DinoEvent'];
+                        completeObjdata = function () {
+                            dinoObj.aliases = dinoAliases;
+                            dinoObj.objclass = "DinoWaveActionProps";
+                            dinoObj.objdata = userInput;
+                        }
+                        break;
+                        case 'FrostWind':
+                        myGrid = {'data':[]}
+                        createSubUI();
+                        nest('Direction:', 'Row:','text','number','windDirection','windRow',true,false,true,'Direction','Row',
+                        undefined,undefined,frostWindArr)
+                        addSubEvButton();
+                        var windObj = {}, windAliases = ['Wave'+i+'FrostWindEvent'];
+                        completeObjdata = function () {
+                            windObj.aliases = windAliases;
+                            windObj.objclass = "FrostWindWaveActionProps";
+                            windObj.objdata.Winds = frostWindArr;
+                            console.log(JSON.stringify(windObj));
+                        }
+                        break;
+                }
             };
-
-
-            var handleSong = function () {
-                var musicEvent = a //uh later, not at home currently
-            }
         }
 
         function myReadData() {
@@ -913,18 +976,18 @@
 
         //utilities
         //--------------------------------------------------------------------------------
-        function clearInputArea(preserveButtons=false) {
+        function clearInputArea(preserveButtons = false) {
             while (myGroupBox.firstChild) {
-			    if(myGroupBox.lastChild) {
-					var x = myGroupBox.lastChild.id;
-					if (x == 'Escalation' && preserveButtons) { newSubLine(); break; }
-				}
+                if (myGroupBox.lastChild) {
+                    var x = myGroupBox.lastChild.id;
+                    if (x == 'Escalation' && preserveButtons) { newSubLine(); break; }
+                }
                 myGroupBox.removeChild(myGroupBox.lastChild);
             }
             myGroupBox.appendChild(document.createElement('br'))
         }
 
-        function clearSubInputArea(preserveButtons=true) {
+        function clearSubInputArea(preserveButtons = true) {
             while (mySubGroupBox.firstChild) {
                 var x = mySubGroupBox.lastChild.id;
                 if (x == 'SunDropper' && preserveButtons) { newSubLine(); break; }
@@ -1090,7 +1153,7 @@
         }
 
         function manageGrid(a) {
-            var val = "RTID(" + a + "GridItemType)";
+            var val = "RTID(" + a + "@GridItemType)";
             return val;
         }
 
@@ -1130,53 +1193,54 @@
 
         }
 
-        function nest(firstText = '', secondText ='', firstType = '', secondType = '', firstId = '', secondId = '', 
-					toNest = boolean, isFirstInt = boolean, isSecondInt = boolean, 
-					nestFirstProp = '', nestSecondProp = '', processFirstAns, processSecondAns,nestArr) {
-			
-			newSubLine(); addSubText(firstText + " "); mySubGroupBox.appendChild(createInput(firstType, firstId));
-			//stop writing Spaghetti code :O
-			
-			var nester = function () {
+        function nest(firstText = '', secondText = '', firstType = '', secondType = '', firstId = '', secondId = '',
+            toNest = Boolean, isFirstInt = Boolean, isSecondInt = Boolean,
+            nestFirstProp = '', nestSecondProp = '', processFirstAns, processSecondAns, nestArr) {
+
+            newSubLine(); addSubText(firstText + " "); mySubGroupBox.appendChild(createInput(firstType, firstId));
+            //stop writing Spaghetti code :O
+
+            var nester = function () {
                 var obj = {};
-				var firstAns, secondAns;
-				
-                if (isFirstInt == true) { 
-					firstAns = readIntInput(firstId); 
-				} else { 
-					firstAns = readTxtInput(firstId);
-				}
-                
-				if (isSecondInt == true) { 
-					secondAns = readIntInput(secondId) 
-				} else { 
-					secondAns = readTxtInput(secondId) 
-				} 
-				
-				
-                if (typeof processFirstAns == 'function') { 
-					firstAns = processFirstAns(firstAns); 
-				}
-				if (typeof processSecondAns == 'function' && secondType != undefined) { 
-					secondAns = processSecondAns(secondAns); 
-				}
-				
+                var firstAns, secondAns;
+
+                if (isFirstInt == true) {
+                    firstAns = readIntInput(firstId);
+                } else {
+                    firstAns = readTxtInput(firstId);
+                }
+                if (isSecondInt != undefined && isSecondInt != null && isSecondInt != Boolean) {
+                    if (isSecondInt == true) {
+                        secondAns = readIntInput(secondId)
+                    } else {
+                        secondAns = readTxtInput(secondId)
+                    }
+                } //check if 2nd input exists
+
+
+                if (typeof processFirstAns == 'function') {
+                    firstAns = processFirstAns(firstAns);
+                }
+                if (typeof processSecondAns == 'function' && secondType != undefined) {
+                    secondAns = processSecondAns(secondAns);
+                }
+
                 if (toNest == true) {
-                    if (firstAns != undefined) { 
-						obj[nestFirstProp] = firstAns 
-					} 
-					if (secondAns != undefined) { 
-						obj[nestSecondProp] = secondAns 
-					}
+                    if (firstAns != undefined) {
+                        obj[nestFirstProp] = firstAns
+                    }
+                    if (secondAns != undefined && secondAns != null) {
+                        obj[nestSecondProp] = secondAns
+                    }
                     nestArr.push(obj);
                 } else {
-                    if (firstAns != undefined) { 
-						nestArr.push(firstAns);
-					}
+                    if (firstAns != undefined) {
+                        nestArr.push(firstAns);
+                    }
                 }
-				
+
             };
-            if (secondType != null || secondType != undefined) addSubText(' ' + secondText + ' '); mySubGroupBox.appendChild(createInput(secondType, secondId));
+            if (secondType != null && secondType != undefined && secondType != '') { addSubText(' ' + secondText + ' '); mySubGroupBox.appendChild(createInput(secondType, secondId)); }
             mySubGroupBox.appendChild(createButton('Add', nester));
         }
 
