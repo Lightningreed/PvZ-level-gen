@@ -671,7 +671,7 @@
         }
 
         function handleWave() {
-            var waveButtons = ['WaveManager', 'WaveManagerProps', 'Escalation'];
+            var waveButtons = ['WaveManager', 'WaveManagerProps', 'Escalation', 'WaveModules'];
             var waveEvent = ['Jam', 'LowTide', 'GroundSpawn', '(Sand/Snow)storm', 'RaidingParty', 'GridSpawn', 'SpawnFromGrid', 'BotSwarm', 'TideChange', 'FrostWind', 'ParachuteRain', 'Portal', 'Dino', 'SunDropper'];
             var waveMgr = [];
             var i = 1;
@@ -698,13 +698,18 @@
 
             handler = function () {
                 clearInputArea(true);
-                clearSubInputArea(false);
-                alert('Lets manage a wave props!');
+                clearSubInputArea(true);
+                addText('Please finish creating all your waves before using this! I am not responsibe if there\'s no WaveCount in the code, or your JSON crashes because of this.')
+                myGrid = {
+                    'data': [ {'name': 'FlagWaveInterval','displayTxt':'Flag interval: ','type':'number','min':'0','id':'flagInterval'},
+                    {'name':'SuppressFlagZombie'}
+                    ]
+                }
             }
             myGroupBox.appendChild(createButton(waveButtons[1], handler)); addText('      ');
             handler = function () {
                 clearInputArea(true);
-                clearSubInputArea(false);
+                clearSubInputArea(true);
                 alert('Don\'t know what is Escalation. :(');
             }
             myGroupBox.appendChild(createButton(waveButtons[2], handler, waveButtons[2]));
@@ -819,7 +824,7 @@
                                 { 'name': 'TimeBeforeFullSpawn', 'id': 'timefullSpawnSwarm', 'displayTxt': 'Time before full spawn', 'type': 'number', 'min': '0', 'max': '' },
                                 { 'name': 'GroupSize', 'id': 'raidGrSize', 'displayTxt': 'Group size: ', 'type': 'number', 'min': '0', 'max': '9' },
                                 { 'name': 'SpiderCount', 'id': 'spiderCount', 'displayTxt': 'Ambush count: ', 'type': 'number', 'min': '0', 'max': '9' },
-                                { 'name': 'SpiderName', 'id': 'spiderName', 'displayTxt': 'Ambush name: ', 'type': 'text' },
+                                { 'name': 'SpiderZombieName', 'id': 'spiderName', 'displayTxt': 'Ambush name: ', 'type': 'text' },
                                 { 'name': 'WaveStartMessage', 'id': 'waveMessSwarm', 'displayTxt': 'Wave message: ', 'type': 'text' },
                                 { 'name': 'ZombieFallTime', 'id': 'zFallTimeSwarm', 'displayTxt': 'Zombie fall time: ', 'type': 'number', 'min': '0', 'max': '9' }
                             ]
@@ -943,8 +948,31 @@
                         completeObjdata = function () {
                             windObj.aliases = windAliases;
                             windObj.objclass = "FrostWindWaveActionProps";
-                            windObj.objdata.Winds = frostWindArr;
+                            windObj.objdata = {Winds: frostWindArr};
                             console.log(JSON.stringify(windObj));
+                        }
+                        break;
+                        case 'ParachuteRain':
+                        myGrid = {
+                            'data': [
+                                { 'name': 'ColumnEnd', 'id': 'colEndSwarm', 'displayTxt': 'Column end: ', 'type': 'number', 'min': '0', 'max': '9' },
+                                { 'name': 'ColumnStart', 'id': 'colStartSwarm', 'displayTxt': 'Column start: ', 'type': 'number', 'min': '0', 'max': '9' },
+                                { 'name': 'TimeBetweenGroup', 'id': 'timebweenGrSwarm', 'displayTxt': 'Time between group: ', 'type': 'number', 'min': '0', 'max': '' },
+                                { 'name': 'TimeBeforeFullSpawn', 'id': 'timefullSpawnSwarm', 'displayTxt': 'Time before full spawn', 'type': 'number', 'min': '0', 'max': '' },
+                                { 'name': 'GroupSize', 'id': 'raidGrSize', 'displayTxt': 'Group size: ', 'type': 'number', 'min': '0', 'max': '9' },
+                                { 'name': 'SpiderCount', 'id': 'spiderCount', 'displayTxt': 'Ambush count: ', 'type': 'number', 'min': '0', 'max': '9' },
+                                { 'name': 'SpiderZombieName', 'id': 'spiderName', 'displayTxt': 'Ambush name: ', 'type': 'text' },
+                                { 'name': 'WaveStartMessage', 'id': 'waveMessSwarm', 'displayTxt': 'Wave message: ', 'type': 'text' },
+                                { 'name': 'ZombieFallTime', 'id': 'zFallTimeSwarm', 'displayTxt': 'Zombie fall time: ', 'type': 'number', 'min': '0', 'max': '9' }
+                            ]
+                        }
+                        createSubUI();
+                        addSubEvButton();
+                        completeObjdata = function () {
+                            var rainAlias = ['Wave' + i + 'RainEvent'], rainObj = {};
+                            rainObj.aliases = swarmAlias;
+                            rainObj.objclass = "ParachuteRainZombieSpawnerProps";
+                            rainObj.objdata = userInput;
                         }
                         break;
                 }
@@ -958,6 +986,11 @@
                 if (val != "") {
                     if (aliasesObject.type === "number") { val = parseInt(val); }
                     a[aliasesObject.name] = val;
+                    if (aliasesObject.type === 'checkbox') {
+                       let chk =  document.getElementById(aliasesObject.id);
+                        if (chk.checked == true) {a[aliasesObject.name] = true;}
+                        else {a[aliasesObject.name] = false;}
+                    }
                 }
             }
 
