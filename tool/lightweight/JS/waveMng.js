@@ -10,7 +10,7 @@ function handleWave() {
         createEventButton();
         newLine();
         addText("Wave: " + i);
-        newLine();
+    newLine();
         myGrid = {
             'data': [
                 { 'name': "AdditionalPlantfood", "type": "number", 'displayTxt': 'Wave plantfood: ', 'min': '0', 'max': '' },
@@ -45,7 +45,7 @@ function handleWave() {
         nest('Additional flag wave: ',undefined,'number',undefined,'additionalFW',undefined,false,true,undefined,undefined,undefined,undefined,undefined,addFlagWave);
         var aliasesWaveProp = ['WaveProperties'], wavePropsData = {}
         completeObjdata = function () {
-            wavePropsData.aliases = aliasesWaveProp;
+            wavePropsData.aliases = aliawsesWaveProp;
             wavePropsData.objclass = "WaveManagerProperties";
             wavePropsData.objdata = userInput;
             wavePropsData.objdata.AdditionalFlagWaves = addFlagWave;
