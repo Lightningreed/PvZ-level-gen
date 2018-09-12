@@ -42,6 +42,7 @@ function handleWave() {
             {'name':"ZombieCountdownHugeWaveDelay",'displayTxt':'Zombie countdown huge wave delay: ','type':'number','min':'0', 'max':'', 'id':'zCDHugeWaveDelay'}
             ]
         }
+        createUI(10);
         nest('Additional flag wave: ',undefined,'number',undefined,'additionalFW',undefined,false,true,undefined,undefined,undefined,undefined,undefined,addFlagWave);
         var aliasesWaveProp = ['WaveProperties'], wavePropsData = {}
         completeObjdata = function () {
