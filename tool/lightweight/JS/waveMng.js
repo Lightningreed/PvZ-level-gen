@@ -320,7 +320,7 @@ function handleWave() {
                 addSubEvButton();
                 completeObjdata = function () {
                     var rainAlias = ['Wave' + i + 'RainEvent'], rainObj = {};
-                    rainObj.aliases = swarmAlias;
+                    rainObj.aliases = rainAlias;
                     rainObj.objclass = "ParachuteRainZombieSpawnerProps";
                     rainObj.objdata = userInput;
                 }
@@ -328,3 +328,8 @@ function handleWave() {
         }
     };
 }
+
+//maybe dump this?
+
+// New idea: Dropdown, only select from it.
+//Though can't be throughly updated
