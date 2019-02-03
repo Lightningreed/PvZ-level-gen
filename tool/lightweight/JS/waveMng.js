@@ -276,7 +276,7 @@ function handleWave() {
                     'data': [
                         {'name':'DinoRow','id':'dinoRow','type':'number','displayTxt':'Dino row: ','min':'0','max':'4'},
                         {'name':'DinoType','id':'dinoType','type':'text','displayTxt':'Dino type: ',},
-                        {'name':'DinoWaveDuration','id':'dinoDuration','type':'number','min':'0','max':'','displayTxt':'Duration: '}
+                        {'name':'DinoWaveDuration','id':'dinoDuration','type':'number','min':'0','max':'','displayTxt':'Dino wave duration: '} //disorganized af
                     ]
                 }
                 createSubUI();
@@ -324,6 +324,26 @@ function handleWave() {
                     rainObj.objclass = "ParachuteRainZombieSpawnerProps";
                     rainObj.objdata = userInput;
                     console.log(JSON.stringify(rainObj));
+                }
+                break;
+                case 'Portal':
+                myGrid = {
+                    'data': [
+                        {'name': 'PortalColumn', 'id':'portalCol', 'displayTxt':'Portal column:', 'type':'number', 'min':'0','max':'9'},
+                        {'name':'PortalRow','id':'portalRow','displayTxt':'Portal row:', 'type':'number',"min":'0','max':'4'},
+                        {'name':'PortalType','id':'portalType','displayTxt':'Portal type (world name):','type':'text'},
+                        {'name':'SpawnEffectAnimID','id':'portalEffAnimID','displayTxt':'Spawn effect animation ID:',},
+                        {'name':'SpawnSoundID','id':'portalSoundID','displayTxt':'Spawn sound ID:','type':'text'}
+                    ]
+                }
+                createSubUI();
+                addSubEvButton();
+                completeObjdata = function () {
+                    var portalAlias = ['Wave' + i + 'PortalEvent'], portalObj = {};
+                    portalObj.aliases = portalAlias;
+                    portalObj.objclass = "SpawnModernPortalsWaveActionProps";
+                    portalObj.objdata = userInput;
+                    console.log(JSON.stringify(portalObj));
                 }
                 break;
         }
