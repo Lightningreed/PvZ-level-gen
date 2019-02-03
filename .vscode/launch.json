@@ -19,5 +19,12 @@
                 "file": "${workspaceFolder}/tool/lightweight/Single file/LevelGen(v0.5).html",
                 "runtimeExecutable": "C:/Users/vitba/AppData/Local/Google/Chrome SxS/Application/chrome.exe"
         },
+        {
+            "name": "Launch lightweight",
+            "type": "chrome",
+            "request": "launch",
+            "file": "${workspaceFolder}/tool/lightweight/JS/base.html"
+            
+        },
     ]
 }

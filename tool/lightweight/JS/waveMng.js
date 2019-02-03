@@ -323,6 +323,7 @@ function handleWave() {
                     rainObj.aliases = rainAlias;
                     rainObj.objclass = "ParachuteRainZombieSpawnerProps";
                     rainObj.objdata = userInput;
+                    console.log(JSON.stringify(rainObj));
                 }
                 break;
         }
