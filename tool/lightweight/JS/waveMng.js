@@ -22,17 +22,18 @@ function handleWave() {
         myGroupBox.appendChild(createButton('Generate wave and events', handleAddWave));
     }
     myGroupBox.appendChild(createButton(waveButtons[0], handler)); addText('      ');
-
+/*
     handleAddWave = function () {
         
     }
-
+*/
     handler = function () { //handler of waveprops
         clearInputArea(true);
         clearSubInputArea(true);
         addText('Please finish creating all your waves before using this! I am not responsibe if there\'s no WaveCount in the code, or your JSON crashes because of this.')
         myGrid = {
-            'data': [ {'name': 'FlagWaveInterval','displayTxt':'Flag interval: ','type':'number','min':'0','id':'flagInterval'},
+            'data': [ 
+            {'name': 'FlagWaveInterval','displayTxt':'Flag interval: ','type':'number','min':'0','id':'flagInterval'},
             {'name':'SuppressFlagZombie','displayTxt':'Suppress flag zombie? ','type':'checkbox','id':'flagZSupression'},
             {'name':'LevelJam', 'displayTxt':'Level jam: (MD only, 1 jam for the whole level): ','type':'text','id':'lvMDJam'},
             {'name':"MinNextWaveHealthPercentage",'displayTxt':'Minimum next wave health %: ','type':'number','min':'0','id':'minNextWavePercent', 'max':''},
@@ -56,7 +57,13 @@ function handleWave() {
     handler = function () {
         clearInputArea(true);
         clearSubInputArea(true);
-        alert('Don\'t know what is Escalation. :(');
+        myGrid = {
+            'data': [
+                {'name':'FlagCount','id':'flagCount','displayTxt':'How many flags will there be in the level? Currently there are' + i + 'wave.', 'type':'number', 'min':'1'},
+                {'name':'PointIncrementWave','id':'pointIncrementWave','displayTxt':'Point increment wave:','type':'number'},
+                {'name':'StartingPoints','id':'startingPoints','displayTxt':'Starting points:', 'type':'number'}
+            ] //should include global scope for flags wave, most of these are not local anyway
+        }
     }
     myGroupBox.appendChild(createButton(waveButtons[2], handler, waveButtons[2]));
 
