@@ -2,7 +2,7 @@ function handleWave() {
     var waveButtons = ['WaveManager', 'WaveManagerProps', 'Escalation', 'WaveModules'];
     var waveEvent = ['Jam', 'LowTide', 'GroundSpawn', '(Sand/Snow)storm', 'RaidingParty', 'GridSpawn', 'SpawnFromGrid', 'BotSwarm', 'TideChange', 'FrostWind', 'ParachuteRain', 'Portal', 'Dino', 'SunDropper'];
     var waveMgr = [];
-    var i = 1;
+    var i = 1; //yup i is wave count in da level. global.
     clearInputArea();
     var handler = function () {
         clearInputArea(true);
