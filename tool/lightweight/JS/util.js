@@ -42,7 +42,7 @@ function clearInputArea(preserveButtons = false) {
 function clearSubInputArea(preserveButtons = true) {
     while (mySubGroupBox.firstChild) {
         var x = mySubGroupBox.lastChild.id;
-        if (x == 'SunDropper' && preserveButtons) { newSubLine(); break; }
+        if (x == 'SunDropper' && preserveButtons) { newSubLine(); break; } /*because sun dropper is the last in the list, make sure to replace it when add new items into the list */
         mySubGroupBox.removeChild(mySubGroupBox.lastChild);
     }
     mySubGroupBox.appendChild(document.createElement('br'))

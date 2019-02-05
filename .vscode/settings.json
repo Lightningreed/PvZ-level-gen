@@ -1,0 +1,7 @@
+{
+    "powermode.enabled": true,
+    "powermode.enableShake": false,
+    "discord.workspaceElapsedTime": true,
+    "editor.cursorBlinking": "smooth",
+    "editor.cursorSmoothCaretAnimation": true
+}

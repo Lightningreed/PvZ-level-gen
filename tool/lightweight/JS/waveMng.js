@@ -1,5 +1,5 @@
 function handleWave() {
-    var waveButtons = ['WaveManager', 'WaveManagerProps', 'Escalation', 'WaveModules'];
+    var waveButtons = ['WaveManager', 'WaveManagerProps', 'Escalation (Randomizer)', 'WaveModules'];
     var waveEvent = ['Jam', 'LowTide', 'GroundSpawn', '(Sand/Snow)storm', 'RaidingParty', 'GridSpawn', 'SpawnFromGrid', 'BotSwarm', 'TideChange', 'FrostWind', 'ParachuteRain', 'Portal', 'Dino', 'SunDropper'];
     var waveMgr = [];
     var i = 1;
@@ -30,7 +30,7 @@ function handleWave() {
     handler = function () { //handler of waveprops
         clearInputArea(true);
         clearSubInputArea(true);
-        addText('Please finish creating all your waves before using this! I am not responsibe if there\'s no WaveCount in the code, or your JSON crashes because of this.')
+        addText('Please finish creating all your waves before using this! I am not responsibe if WaveCount is falsified, or your JSON crashes because of this. Eventually I will fix it, but not now.')
         myGrid = {
             'data': [ 
             {'name': 'FlagWaveInterval','displayTxt':'Flag interval: ','type':'number','min':'0','id':'flagInterval'},
@@ -57,11 +57,14 @@ function handleWave() {
     handler = function () {
         clearInputArea(true);
         clearSubInputArea(true);
+        addText('Ensure that you created WaveProperties. (I know I can prevent the accessiblity of this module before you do it, but laziness). Any excess from WaveProps will be randomized (wave count, e.t.c)')
         myGrid = {
             'data': [
-                {'name':'FlagCount','id':'flagCount','displayTxt':'How many flags will there be in the level? Currently there are' + i + 'wave.', 'type':'number', 'min':'1'},
+                {'name':'FlagCount','id':'flagCount','displayTxt':'Flag count (excessing flags will be randomized, check WaveProps)', 'type':'number', 'min':'1'},
                 {'name':'PointIncrementWave','id':'pointIncrementWave','displayTxt':'Point increment wave:','type':'number'},
-                {'name':'StartingPoints','id':'startingPoints','displayTxt':'Starting points:', 'type':'number'}
+                {'name':'StartingPoints','id':'startingPoints','displayTxt':'Starting points:', 'type':'number'},
+                {'name':'WavePerFlag','id':'wavePerFlagRando','displayTxt':'Wave per flag:','type':'number'},
+                {'name':''}
             ] //should include global scope for flags wave, most of these are not local anyway
         }
     }

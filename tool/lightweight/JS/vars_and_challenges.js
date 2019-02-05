@@ -132,8 +132,8 @@
              myGrid = {
                  "className": "ModifyPlantCooldown",
                  "data": [
-                     { "name": "CooldownMultiplier", "id": "cooldownMod", "displayTxt": "Define CooldownMultiplier", "type": "number", "min": "", "max": "" },
-                     { "name": "HomeworldToExcludeFromOverride", "id": "cooldownExclusion", "displayTxt": "Exclude a homeworld from CooldownMod", "type": "text" }
+                     { "name": "CooldownMultiplier", "id": "cooldownMod", "displayTxt": "Cooldown multiplier (example x0.5, x2 [without the 'x']): ", "type": "number", "min": "", "max": "" },
+                     { "name": "HomeworldToExcludeFromOverride", "id": "cooldownExclusion", "displayTxt": "Exclude a homeworld from CooldownMod: ", "type": "text" }
                  ]
              };
              createUI();
