@@ -23,7 +23,8 @@
          var spawnGridNestArr = [];
          var zGridNestArr = [];
          var frostWindArr = [];
-         var addFlagWave = []
+         var addFlagWave = [];
+         var escalationArray = [];
  
          //functions
          var completeObjdata;

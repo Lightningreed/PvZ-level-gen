@@ -251,6 +251,7 @@ function nest(firstText = '', secondText = '', firstType = '', secondType = '', 
 
     newSubLine(); addSubText(firstText + " "); mySubGroupBox.appendChild(createInput(firstType, firstId));
     //stop writing Spaghetti code :O
+    //need a global array for this
 
     var nester = function () {
         var obj = {};
@@ -277,17 +278,18 @@ function nest(firstText = '', secondText = '', firstType = '', secondType = '', 
             secondAns = processSecondAns(secondAns);
         }
 
-        if (toNest == true) {
+        if (toNest == true) { //which means only activate when toNest is true and why am i commenting this
             if (firstAns != undefined) {
-                obj[nestFirstProp] = firstAns
+                obj[nestFirstProp] = firstAns //which is <nestFirstProp>:key. HOW COULD I FORGET THIS HAHAHAHA
             }
             if (secondAns != undefined && secondAns != null) {
                 obj[nestSecondProp] = secondAns
             }
             nestArr.push(obj);
-        } else {
+        } 
+        else {
             if (firstAns != undefined) {
-                nestArr.push(firstAns);
+                nestArr.push(firstAns); //add that element into array. Long function, just making sure i won't forget.
             }
         }
 

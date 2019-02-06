@@ -3,5 +3,6 @@
     "powermode.enableShake": false,
     "discord.workspaceElapsedTime": true,
     "editor.cursorBlinking": "smooth",
-    "editor.cursorSmoothCaretAnimation": true
+    "editor.cursorSmoothCaretAnimation": true,
+    "powermode.presets": "exploding-rift"
 }
