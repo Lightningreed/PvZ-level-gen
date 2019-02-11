@@ -230,9 +230,10 @@ function askZ(putZombieIntoObject = Boolean) { //false also disable row input
     objW.Type = validateZombie(zombieW);
     if (row != null && row != undefined) { objW.Row = row };
     zArr.push(objW);
-    console.log('HAH');
    }
-   else {zArr.push(validateZombie(zombieW)); console.log('HAH');}
+   else {var zombieW = readTxtInput('zombie');
+       zArr.push(validateZombie(zombieW));
+    }
 }
    myGroupBox.appendChild(createButton('Add', handleZ));
 }

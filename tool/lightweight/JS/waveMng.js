@@ -65,19 +65,16 @@ function handleWave() {
                 {'name':'WavePerFlag','id':'wavePerFlagRando','displayTxt':'Wave per flag:','type':'number'}
             ] //should include global scope for flags wave, most of these are not local anyway
         }
-        createUI(22);
         askZ(false);
-        handleEscalation = function () {
+        createUI();
+        completeObjdata = function () {
             var escalationObj = {}, escalationAlias =  ['Escalation'];
-            completeObjdata = function (x) {
                 escalationObj.aliases = escalationAlias;
                 escalationObj.objclass = "LevelEscalationMouduleProperties";
                 escalationObj.objdata = userInput;
                 escalationObj.objdata.ZombiePool = zArr;
                 console.log(JSON.stringify(escalationObj));
-            }
     }
-    myGroupBox.appendChild(createButton('Generate',handleEscalation,'handleEscalationID'));
     }
     myGroupBox.appendChild(createButton(waveButtons[2], handler, 'escalationClass'));
 
