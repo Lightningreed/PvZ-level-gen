@@ -1,53 +1,3 @@
-function nest(firstText = '', secondText = '', firstType = '', secondType = '', firstId = '', secondId = '',
-    toNest = Boolean, isFirstInt = Boolean, isSecondInt = Boolean,
-    nestFirstProp = '', nestSecondProp = '', processFirstAns, processSecondAns, nestArr) {
-
-    newSubLine(); addSubText(firstText + " "); mySubGroupBox.appendChild(createInput(firstType, firstId));
-    //stop writing Spaghetti code :O
-
-    var nester = function () {
-        var obj = {};
-        var firstAns, secondAns;
-
-        if (isFirstInt == true) {
-            firstAns = readIntInput(firstId);
-        } else {
-            firstAns = readTxtInput(firstId);
-        }
-        if (isSecondInt != undefined && isSecondInt != null && isSecondInt != Boolean) {
-            if (isSecondInt == true) {
-                secondAns = readIntInput(secondId)
-            } else {
-                secondAns = readTxtInput(secondId)
-            }
-        } //check if 2nd input exists
-
-
-        if (typeof processFirstAns == 'function') {
-            firstAns = processFirstAns(firstAns);
-        }
-        if (typeof processSecondAns == 'function' && secondType != undefined) {
-            secondAns = processSecondAns(secondAns);
-        }
-
-        if (toNest == true) {
-            if (firstAns != undefined) {
-                obj[nestFirstProp] = firstAns
-            }
-            if (secondAns != undefined && secondAns != null) {
-                obj[nestSecondProp] = secondAns
-            }
-            nestArr.push(obj);
-        } else {
-            if (firstAns != undefined) {
-                nestArr.push(firstAns);
-            }
-        }
-
-    };
-    if (secondType != null && secondType != undefined && secondType != '') { addSubText(' ' + secondText + ' '); mySubGroupBox.appendChild(createInput(secondType, secondId)); }
-    mySubGroupBox.appendChild(createButton('Add', nester));
-}
 function handleWave() {
     var waveButtons = ['WaveManager', 'WaveManagerProps', 'Escalation (Randomizer)', 'WaveModules'];
     var waveEvent = ['Jam', 'LowTide', 'GroundSpawn', '(Sand/Snow)storm', 'RaidingParty', 'GridSpawn', 'SpawnFromGrid', 'BotSwarm', 'TideChange', 'FrostWind', 'ParachuteRain', 'Portal', 'Dino', 'SunDropper'];
@@ -72,11 +22,10 @@ function handleWave() {
         myGroupBox.appendChild(createButton('Generate wave and events', handleAddWave));
     }
     myGroupBox.appendChild(createButton(waveButtons[0], handler)); addText('      ');
-/*
     handleAddWave = function () {
         
     }
-*/
+
     handler = function () { //handler of waveprops
         clearInputArea(true);
         clearSubInputArea(true);
@@ -94,7 +43,7 @@ function handleWave() {
             ]
         }
         createUI(10);
-        nest('Additional flag wave: ',undefined,'number',undefined,'additionalFW',undefined,false,true,undefined,undefined,undefined,undefined,undefined,addFlagWave);
+        nest('Additional flag wave: ',undefined,'number',undefined,'additionalFW',undefined,false,true,undefined,undefined,undefined,undefined,undefined,addFlagWave,true);
         var aliasesWaveProp = ['WaveProperties'], wavePropsData = {}
         completeObjdata = function () {
             wavePropsData.aliases = aliawsesWaveProp;
@@ -107,7 +56,7 @@ function handleWave() {
     handler = function () {
         clearInputArea(true);
         clearSubInputArea(true);
-        addText('Ensure that you created WaveProperties. (I know I can prevent the accessiblity of this module before you do it, but laziness). Any excess from WaveProps will be randomized (wave count, e.t.c)')
+        addText('Ensure that you created WaveProperties. (I know I can prevent the accessiblity of this module before you do it, but laziness). Any excess from WaveProps will be randomized (wave count, e.t.c)'); newLine();
         myGrid = {
             'data': [
                 {'name':'FlagCount','id':'flagCount','displayTxt':'Flag count (excessing flags will be randomized, check WaveProps)', 'type':'number', 'min':'1'},
@@ -116,7 +65,8 @@ function handleWave() {
                 {'name':'WavePerFlag','id':'wavePerFlagRando','displayTxt':'Wave per flag:','type':'number'}
             ] //should include global scope for flags wave, most of these are not local anyway
         }
-        nest('Random zombie', undefined,'text',undefined,'escalationZombie',undefined,false,false,false,)
+        createUI(22);
+        askZ();
     }
     myGroupBox.appendChild(createButton(waveButtons[2], handler, waveButtons[2]));
 

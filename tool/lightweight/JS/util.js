@@ -216,17 +216,22 @@ function hideSubBox() {
 function showSubBox() {
     document.getElementById('mySubGroupBox').removeAttribute('hidden');
 }
-function askZ() {
+function askZ(putZombieIntoObject = Boolean) { //false also disable row input
     var zArr = [];
     newLine(); addText('Zombie: '); myGroupBox.appendChild(createInput('text', 'zombie'));
-    addText('  at row: '); myGroupBox.appendChild(createInput('text', 'rowW')); addText('  '); myGroupBox.appendChild(createButton('Add', handleZ));
-    var handleZ = function () {
-        var objW = {};
+   if (putZombieIntoObject != false) { 
+       addText('  at row: '); myGroupBox.appendChild(createInput('text', 'rowW')); addText('  ');
+   }
+   myGroupBox.appendChild(createButton('Add', handleZ));
+       var handleZ = function () {
+        if (putZombieIntoObject != false) {var objW = {};
         var row = readIntInput('rowW');
         var zombieW = readTxtInput('zombie');
-        objW.Type = validateWave(zombieW);
+        objW.Type = validateZombie(zombieW);
         if (row != null && row != undefined) { objW.Row = row };
         zArr.push(objW);
+       }
+       else {zArr.push(validateZombie(zombieW))}
     }
 }
 
@@ -247,9 +252,15 @@ function askSubZ() {
 
 function nest(firstText = '', secondText = '', firstType = '', secondType = '', firstId = '', secondId = '',
     toNest = Boolean, isFirstInt = Boolean, isSecondInt = Boolean,
-    nestFirstProp = '', nestSecondProp = '', processFirstAns, processSecondAns, nestArr) {
+    nestFirstProp = '', nestSecondProp = '', processFirstAns, processSecondAns, nestArr, putAbove = Boolean) {
 
+        if (putAbove == false ||putAbove == undefined) {
     newSubLine(); addSubText(firstText + " "); mySubGroupBox.appendChild(createInput(firstType, firstId));
+        }
+        else {
+            newLine(); addText(firstText + " "); myGroupBox.appendChild(createInput(firstType, firstId));
+    }
+    
     //stop writing Spaghetti code :O
     //need a global array for this
 
@@ -277,6 +288,7 @@ function nest(firstText = '', secondText = '', firstType = '', secondType = '', 
         if (typeof processSecondAns == 'function' && secondType != undefined) {
             secondAns = processSecondAns(secondAns);
         }
+        //this function declare that whether to not use a fucntion on the provided input.
 
         if (toNest == true) { //which means only activate when toNest is true and why am i commenting this
             if (firstAns != undefined) {
@@ -307,6 +319,7 @@ Type = Input type
 Id = Input id
 
  */
+
 
 function addSubEvButton(a) {
     newSubLine();

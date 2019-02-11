@@ -14,7 +14,7 @@
          var a;//field
          var moldConfig = [];
          var c; //param o' box
-         var zArr = [];
+         var zArr = []; //askZ(); 's array
  
          //this one get a global flag for nest()
          var fireNest;
