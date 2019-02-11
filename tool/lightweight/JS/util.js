@@ -222,17 +222,19 @@ function askZ(putZombieIntoObject = Boolean) { //false also disable row input
    if (putZombieIntoObject != false) { 
        addText('  at row: '); myGroupBox.appendChild(createInput('text', 'rowW')); addText('  ');
    }
+   var handleZ = function () {
+    if (putZombieIntoObject != false) {
+    var objW = {};
+    var row = readIntInput('rowW');
+    var zombieW = readTxtInput('zombie');
+    objW.Type = validateZombie(zombieW);
+    if (row != null && row != undefined) { objW.Row = row };
+    zArr.push(objW);
+    console.log('HAH');
+   }
+   else {zArr.push(validateZombie(zombieW)); console.log('HAH');}
+}
    myGroupBox.appendChild(createButton('Add', handleZ));
-       var handleZ = function () {
-        if (putZombieIntoObject != false) {var objW = {};
-        var row = readIntInput('rowW');
-        var zombieW = readTxtInput('zombie');
-        objW.Type = validateZombie(zombieW);
-        if (row != null && row != undefined) { objW.Row = row };
-        zArr.push(objW);
-       }
-       else {zArr.push(validateZombie(zombieW))}
-    }
 }
 
 function askSubZ() {

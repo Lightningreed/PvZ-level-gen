@@ -23,7 +23,7 @@ function handleWave() {
     }
     myGroupBox.appendChild(createButton(waveButtons[0], handler)); addText('      ');
     handleAddWave = function () {
-        
+        var waveMngObj = {}
     }
 
     handler = function () { //handler of waveprops
@@ -46,7 +46,7 @@ function handleWave() {
         nest('Additional flag wave: ',undefined,'number',undefined,'additionalFW',undefined,false,true,undefined,undefined,undefined,undefined,undefined,addFlagWave,true);
         var aliasesWaveProp = ['WaveProperties'], wavePropsData = {}
         completeObjdata = function () {
-            wavePropsData.aliases = aliawsesWaveProp;
+            wavePropsData.aliases = aliasesWaveProp;
             wavePropsData.objclass = "WaveManagerProperties";
             wavePropsData.objdata = userInput;
             wavePropsData.objdata.AdditionalFlagWaves = addFlagWave;
@@ -66,9 +66,21 @@ function handleWave() {
             ] //should include global scope for flags wave, most of these are not local anyway
         }
         createUI(22);
-        askZ();
+        askZ(false);
+        handleEscalation = function () {
+            var escalationObj = {}, escalationAlias =  ['Escalation'];
+            completeObjdata = function (x) {
+                escalationObj.aliases = escalationAlias;
+                escalationObj.objclass = "LevelEscalationMouduleProperties";
+                escalationObj.objdata = userInput;
+                escalationObj.objdata.ZombiePool = zArr;
+                console.log(JSON.stringify(escalationObj));
+            }
     }
-    myGroupBox.appendChild(createButton(waveButtons[2], handler, waveButtons[2]));
+    myGroupBox.appendChild(createButton('Generate',handleEscalation,'handleEscalationID'));
+    }
+    myGroupBox.appendChild(createButton(waveButtons[2], handler, 'escalationClass'));
+
 
     //event button, probably I'll be able to fire an event for nest here to clear a global array for convenient, too many arrays currently
     function createEventButton() {
