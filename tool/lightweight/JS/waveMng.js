@@ -233,10 +233,10 @@ function handleWave() {
                 }
                 createSubUI();
 
-                nest('Type:', 'Count:', 'text', 'number', 'gridSpawnType', 'gridSpawnCount', true, false, true, 'Type', 'Count', manageGrid, undefined, nestArr1);
+                nest('Type:', 'Count:', 'text', 'number', 'gridSpawnType', 'gridSpawnCount', true, false, true, 'Type', 'Count', manageGrid, undefined, nestArr1, false);
                 newSubLine();
 
-                nest('mX:', 'mY', 'number', 'number', 'mX', 'mY', true, true, true, 'mX', 'mY', undefined, undefined, nestArr2);
+                nest('mX:', 'mY', 'number', 'number', 'mX', 'mY', true, true, true, 'mX', 'mY', undefined, undefined, nestArr2, false);
                 addSubEvButton();
 
                 var gridSAlias = ['Wave' + i + "GridSpawnEvent"], gridSObj = {};
@@ -273,11 +273,11 @@ function handleWave() {
                 createSubUI();
 
                 nest('Grid type to spawn from: ', undefined, 'text', undefined, 'gridSpawnType', undefined, false, false, undefined, undefined,
-                    undefined, manageGrid, undefined, spawnGridNestArr)
+                    undefined, manageGrid, undefined, spawnGridNestArr, false)
                 newSubLine();
 
                 nest('Zombie type:', undefined, 'text', undefined, 'zTypeSpawnGrid', undefined, true, false, undefined,
-                    'Type', undefined, validateZombie, undefined, zGridNestArr)
+                    'Type', undefined, validateZombie, undefined, zGridNestArr, false)
 
                 newSubLine(); addSubEvButton();
                 var spawnGridAlias = ['Wave' + i + 'SpawnFromGridEvent'], spawnGridObj = {};
