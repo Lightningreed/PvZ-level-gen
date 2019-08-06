@@ -3,6 +3,7 @@ function handleWave() {
     var waveEvent = ['Jam', 'LowTide', 'GroundSpawn', '(Sand/Snow)storm', 'RaidingParty', 'GridSpawn', 'SpawnFromGrid', 'BotSwarm', 'TideChange', 'FrostWind', 'ParachuteRain', 'Portal', 'Dino', 'SunDropper'];
     var waveMgr = [];
     var i = 1; //yup i is wave count in da level. global.
+    var tempNewZombies = {};
     clearInputArea();
     var handler = function () {
         clearInputArea(true);
@@ -13,18 +14,34 @@ function handleWave() {
     newLine();
         myGrid = {
             'data': [
-                { 'name': "AdditionalPlantfood", "type": "number", 'displayTxt': 'Wave plantfood: ', 'min': '0', 'max': '' },
-                { 'name': 'ZombieSpawnPattern', 'type': 'text', 'displayTxt': 'Spawn pattern: ', 'value': 'ZombieSpawnPattern' }
+                { 'name': "AdditionalPlantfood", "type": "number",'id':'addPF', 'displayTxt': 'Wave plantfood: ', 'min': '0', 'max': '' },
+                { 'name': 'ZombieSpawnPattern', 'type': 'text','id':'zSpawnPattern', 'displayTxt': 'Spawn pattern: ', 'value': 'ZombieSpawnPattern' }
             ]
         }
-        createUI(10);
-        askZ(); newLine();
-        myGroupBox.appendChild(createButton('Generate wave and events', handleAddWave));
+        createUI();
+        askZ();
+        completeObjdata = function () {
+            var waveObjdata = {};
+            waveObjdata.aliases = ["Wave" + i];
+            waveObjdata.objclass = "SpawnZombiesJitteredWaveActionProps";
+            waveObjdata.objdata = userInput;
+            waveObjdata.objdata.Zombies = tempZArray;
+            tempZArray = []; //clear the array when the process is done
+            console.log(JSON.stringify(waveObjdata));
+        }
+       // myGroupBox.appendChild(createButton('Generate wave and events', handleAddWave));
+
     }
     myGroupBox.appendChild(createButton(waveButtons[0], handler)); addText('      ');
-    handleAddWave = function () {
-        var waveMngObj = {}
-    }
+ /*   handleAddWave = function () {
+        var waveObjdata = {};
+        waveObjdata.aliases = ["Wave" + i];
+        waveObjdata.objclass = "SpawnZombiesJitteredWaveActionProps";
+        waveObjdata.objdata = userInput;
+        waveObjdata.objdata.Zombies = tempZArray;
+        tempZArray = []; //clear the array when the process is done
+        console.log(JSON.stringify(waveObjdata));
+    } */
 
     handler = function () { //handler of waveprops
         clearInputArea(true);

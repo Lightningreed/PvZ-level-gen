@@ -1,3 +1,4 @@
+var tempZArray = []; //askZ's array cuz added it to vars and challenge and compiler complained
 function myReadData() {
     var a = {};
     myGrid.data.forEach(function insertObject(aliasesObject) {
@@ -217,7 +218,7 @@ function showSubBox() {
     document.getElementById('mySubGroupBox').removeAttribute('hidden');
 }
 function askZ(putZombieIntoObject = Boolean) { //false also disable row input
-    var zArr = [];
+   // var zArr = [];
     newLine(); addText('Zombie: '); myGroupBox.appendChild(createInput('text', 'zombie'));
    if (putZombieIntoObject != false) { 
        addText('  at row: '); myGroupBox.appendChild(createInput('text', 'rowW')); addText('  ');
@@ -229,10 +230,12 @@ function askZ(putZombieIntoObject = Boolean) { //false also disable row input
     var zombieW = readTxtInput('zombie');
     objW.Type = validateZombie(zombieW);
     if (row != null && row != undefined) { objW.Row = row };
-    zArr.push(objW);
+    //zArr.push(objW);
+    tempZArray.push(objW);
    }
    else {var zombieW = readTxtInput('zombie');
-       zArr.push(validateZombie(zombieW));
+      // zArr.push(validateZombie(zombieW));
+      tempZArray.push(validateZombie(zombieW));
     }
 }
    myGroupBox.appendChild(createButton('Add', handleZ));
