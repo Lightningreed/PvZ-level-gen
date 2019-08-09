@@ -1,0 +1,43 @@
+PealoverToday at 15:49
+yes
+@CurrentLevel means it's in this level's JSON
+@LevelModules means it's in the levelmodules.json
+ 
+minefulTacticianToday at 15:50
+quite literally anything can be CurrentLevel, really
+ 
+PealoverToday at 15:50
+well just @. goes too i guess
+ 
+minefulTacticianToday at 15:50
+@. is a bit different
+ 
+define before use functionToday at 15:50
+Guess I am adding an option to let people choose whether they want CurrentLevel or LevelModules
+ 
+minefulTacticianToday at 15:50
+gonna be extra code for you
+some things are strictly Cur, some are optional
+ 
+PealoverToday at 15:51
+some of the modules refer to currentlevel because they don't exist in levelmodules
+ 
+minefulTacticianToday at 15:51
+@. is at current rton
+@CurrentLevel is at current level
+ 
+PealoverToday at 15:52
+what's the difference
+ 
+minefulTacticianToday at 15:52
+when the rton is not a level
+ 
+PealoverToday at 15:52
+so it won't work if you use currentlevel in levelmodules?
+ 
+minefulTacticianToday at 15:52
+yes
+for example
+in zombietypes I code dino
+dino@. means if I call him as dino@ZombieTypes in a level, the game will search for its props in zombietypes
+dino@CurrentLevel means if I call him, the game will search for its props in THAT level.
